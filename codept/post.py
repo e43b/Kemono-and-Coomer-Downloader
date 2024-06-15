@@ -87,6 +87,12 @@ def baixar_conteudo(url):
                 imported_date = imported_tag.text.strip().split(": ")[1]
                 f.write(f"Data de importação: {imported_date}\n\n")
 
+            # Conteúdo do post
+            content_section = soup.find("div", class_="post__content")
+            if content_section:
+                content = content_section.get_text(strip=True)
+                f.write(f"Conteúdo:\n{content}\n\n")
+
             # Tags
             tags_section = soup.find("section", id="post-tags")
             if tags_section:
