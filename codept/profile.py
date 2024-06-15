@@ -161,7 +161,7 @@ with open("profileconfig.json", "r") as f:
     profile_config = json.load(f)
 
 # URL base fornecida
-base_url = "https://coomer.su/fansly/user/285310079517863936"
+base_url = input("Por favor, insira a URL do Perfil: ")
 
 # Variável para armazenar todos os posts
 all_posts = []
