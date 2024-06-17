@@ -1,6 +1,6 @@
 # Kemono and Coomer Downloader  [![Views](https://hits.sh/github.com/e43bkmncoom/hits.svg)](https://github.com/e43b/Anibunker-Downloader/)
 
-###### [![](img/en-flag.svg) English](README.md) | [![](img/Flag_of_Brazil.svg.png) Português](README-ptbr.md)
+###### [![](img/en-flag.svg) English](README.md) | [![](img/br.png) Português](README-ptbr.md)
 
 O **Kemono and Coomer Downloader** é uma ferramenta que permite baixar posts dos sites [Kemono](https://kemono.su/) e [Coomer](https://coomer.su/).
 
