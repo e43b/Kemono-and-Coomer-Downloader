@@ -1,4 +1,4 @@
-# Coomer-Download
+# Kemono-and-Coomer-Downloader
 
 Baixe Posts dos sites
 ## Kemono
