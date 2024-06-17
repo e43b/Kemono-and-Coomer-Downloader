@@ -3,7 +3,7 @@
 ###### [![](img/en-flag.svg) English](README.md) | [![](img/br.png) Português](README-ptbr.md)
 
 ### Faça uma doação
-Acesse [link](https://oxapay.com/donate/40874860).
+### Acesse [link](https://oxapay.com/donate/40874860).
 
 O **Kemono and Coomer Downloader** é uma ferramenta que permite baixar posts dos sites [Kemono](https://kemono.su/) e [Coomer](https://coomer.su/).
 
