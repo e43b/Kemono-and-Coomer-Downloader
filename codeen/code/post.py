@@ -8,10 +8,10 @@ import json
 with open("code/config.json", "r") as f:
     config = json.load(f)
 
-baixar_anexos = config["baixar_anexos"]
-baixar_videos = config["baixar_videos"]
-salvar_info_txt = config["salvar_info_txt"]
-salvar_comentarios_txt = config["salvar_comentarios_txt"]
+download_attachments = config["download_attachments"]
+download_videos = config["download_videos"]
+save_info_txt = config["save_info_txt"]
+save_comments_txt = config["save_comments_txt"]
 
 # Request URL(s) from the user
 urls_input = input("Please enter the post URL or URLs separated by commas: ")
@@ -118,7 +118,7 @@ def baixar_conteudo(url):
             f.write("\n")  # Adds a line break after attachments
 
             # Comments
-            if salvar_comentarios_txt:
+            if save_comments_txt:
                 comments_section = soup.find("footer", class_="post__footer")
                 if comments_section:
                     comments = comments_section.find_all("article", class_="comment")
@@ -131,7 +131,7 @@ def baixar_conteudo(url):
                             f.write(f"- {comment_author} ({comment_date}): {comment_text}\n\n")
 
     # Save post information if the user wants to
-    if salvar_info_txt:
+    if save_info_txt:
         salvar_info_post(soup, post_path)
 
     # Set to store already downloaded links
@@ -157,7 +157,7 @@ def baixar_conteudo(url):
             links_baixados.add(image_url)
 
     # Checking if the user wants to download post attachments
-    if baixar_anexos:
+    if download_attachments:
         # Finding attachment tags
         attachment_tags = soup.find_all("a", class_="post__attachment-link")
         # Iterating over attachment tags
@@ -177,7 +177,7 @@ def baixar_conteudo(url):
                 links_baixados.add(attachment_url)
 
     # Checking if the user wants to download videos
-    if baixar_videos:
+    if download_videos:
         # Finding video tags
         video_tags = soup.find_all("a", class_="post__attachment-link")
         # Iterating over video tags
