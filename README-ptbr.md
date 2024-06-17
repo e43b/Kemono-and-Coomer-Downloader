@@ -69,6 +69,12 @@ Funciona apenas em perfis do site Kemono, pois o Coomer não possui essa funçã
 ![DM](img/dm.png)
 ![DM arquivos](img/dmarchive.png)
 
+## Organização dos Arquivos
+
+Os vídeos são salvos em pastas para facilitar a organização. É criada uma pasta para os episódios do anime legendado e outra para os episódios do anime dublado.
+
+![Arquivos](img/arquivos.png)
+
 ## Configuração
 
 Página para personalizar o programa a sua necessidade
@@ -94,11 +100,25 @@ No modo de configuração de perfil, o usuário pode definir o que deseja baixar
 
 Para mais detalhes, consulte a [documentação](https://github.com/e43b/Kemono-and-Coomer-Downloader/blob/main/codept/doc.md).
 
+## Contribuições
+
+Este projeto é de código aberto e você é encorajado a contribuir para melhorias e novas funcionalidades. Sinta-se à vontade para enviar sugestões, relatar problemas ou enviar pull requests através do [repositório oficial no GitHub](https://github.com/e43b/Kemono-and-Coomer-Downloader/) ou por meio do nosso [Discord](https://discord.gg/TaPhfXawcE)
+
+## Autor
+
+Desenvolvido e mantido por [E43b](https://github.com/e43b), o Kemono and Coomer Downloader visa simplificar o processo de download de posts do Kemono e Coomer, proporcionando uma experiência mais acessível e organizada.
+
 ## Suporte
 
 Caso tenha problemas ou encontre bugs, acesse o [Discord](https://discord.gg/TaPhfXawcE).
 
-Caso queira doar algo em criptomoedas, acesse o [link](https://oxapay.com/donate/40874860).
+Caso queira fazer uma doação acesse [link](https://oxapay.com/donate/40874860).
+
+## Links
+
+- Repositório do Projeto: [https://github.com/e43b/Kemono-and-Coomer-Downloader/](https://github.com/e43b/Kemono-and-Coomer-Downloader/)
+- Site Kemono: [https://kemono.su/](https://kemono.su/)
+- Site Coomer: [https://coomer.su/](https://coomer.su/)
 
 ---
 
