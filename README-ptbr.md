@@ -67,9 +67,13 @@ Insira o link de um perfil do Kemono ou Coomer, e o script iniciará o download 
 Funciona apenas em perfis do site Kemono, pois o Coomer não possui essa função. Basta colocar o link do perfil, e todas as DMs serão extraídas em `.txt` e salvas na pasta `dm`.
 
 ![DM](img/dm.png)
-![DM arquivos](img/dmd.png)
+![DM arquivos](img/dmarchive.png)
 
 ## Configuração
+
+Página para personalizar o programa a sua necessidade
+
+![Settings](img/configure.png)
 
 ### Configuração de Posts
 
@@ -80,9 +84,13 @@ No modo de configuração de posts, o usuário pode definir algumas opções, co
 - Salvar informações em um arquivo `.txt`, como título, data de postagem, data de importação e conteúdo.
 - Salvar comentários do post no arquivo `.txt`. Para salvar os comentários, a opção de salvar informações deve estar ativada.
 
+![Settings](img/postconfig.png)
+
 ### Configuração de Perfil
 
 No modo de configuração de perfil, o usuário pode definir o que deseja baixar dos posts, similar às opções de configuração de posts. O diferencial é que o usuário pode filtrar por posts que tenham ou não tenham imagens, podendo escolher uma ou outra, ou ambas as versões.
+
+![Settings](img/configprofile.png)
 
 Para mais detalhes, consulte a [documentação](https://github.com/e43b/Kemono-and-Coomer-Downloader/blob/main/codept/doc.md).
 
