@@ -67,7 +67,7 @@ Insira o link de um perfil do Kemono ou Coomer, e o script iniciará o download 
 Funciona apenas em perfis do site Kemono, pois o Coomer não possui essa função. Basta colocar o link do perfil, e todas as DMs serão extraídas em `.txt` e salvas na pasta `dm`.
 
 ![DM](img/dm.png)
-![DM arquivos](img/dmarchive.png)
+![DM arquivos](img/dmarchives.png)
 
 ## Organização dos Arquivos
 
