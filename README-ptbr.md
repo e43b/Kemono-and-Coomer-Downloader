@@ -36,11 +36,15 @@ Com essa ferramenta, é possível baixar posts únicos, múltiplos posts sequenc
 
 As bibliotecas necessárias são: `requests` e `beautifulsoup4`. Ao iniciar o script pela primeira vez, se as bibliotecas não estiverem instaladas, será solicitado que você as instale. Basta digitar "s" e elas serão instaladas automaticamente.
 
+![Requirements](img/bibliotecas.png)
+
 ## Funcionalidades
 
 ### Página Inicial
 
 A página inicial do projeto apresenta as principais opções disponíveis para facilitar a utilização da ferramenta.
+
+![Página Inicial](img/home.png)
 
 ### Baixar Post
 
@@ -50,13 +54,20 @@ Para baixar posts específicos, basta inserir o link do post. Se desejar baixar 
 https://kemono.su/patreon/user/133054/post/82477856 , https://coomer.su/fansly/user/285310079517863936/post/614339200069672960 , https://coomer.su/fansly/user/285310079517863936/post/611301068940255234
 ```
 
+![Posts](img/posts.png)
+
 ### Baixar Todos os Posts de um Perfil
 
 Insira o link de um perfil do Kemono ou Coomer, e o script iniciará o download de todos os posts que combinam com a configuração do programa para baixar todos os posts de um perfil.
 
+![Profile](img/perfil.png)
+
 ### Baixar DMs
 
 Funciona apenas em perfis do site Kemono, pois o Coomer não possui essa função. Basta colocar o link do perfil, e todas as DMs serão extraídas em `.txt` e salvas na pasta `dm`.
+
+![DM](img/dm.png)
+![DM arquivos](img/dmd.png)
 
 ## Configuração
 
