@@ -156,7 +156,7 @@ If you encounter problems, find bugs, or have any questions, visit our [Discord]
 - **Kemono Site:** [https://kemono.su/](https://kemono.su/)
 - **Coomer Site:** [https://coomer.su/](https://coomer.su/)
 
---
+
 
 ### Support the Project
 
