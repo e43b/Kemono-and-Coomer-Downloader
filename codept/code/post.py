@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 import json
 
 # Carregar configurações do arquivo JSON
-with open("config.json", "r") as f:
+with open("code/config.json", "r") as f:
     config = json.load(f)
 
 baixar_anexos = config["baixar_anexos"]
