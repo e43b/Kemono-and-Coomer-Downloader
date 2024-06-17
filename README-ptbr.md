@@ -113,24 +113,24 @@ Kemono-and-Coomer-Downloader/
 
 ## Configuração
 
-Página para personalizar o programa a sua necessidade
+A página de configuração permite que você personalize o programa de acordo com suas necessidades.
 
 ![Settings](img/configure.png)
 
 ### Configuração de Posts
 
-No modo de configuração de posts, o usuário pode definir algumas opções, como:
+No modo de configuração de posts, o usuário pode definir várias opções, incluindo:
 
-- Baixar ou não anexos.
-- Baixar vídeos quando disponíveis.
-- Salvar informações em um arquivo `.txt`, como título, data de postagem, data de importação e conteúdo.
-- Salvar comentários do post no arquivo `.txt`. Para salvar os comentários, a opção de salvar informações deve estar ativada.
+- **Baixar Anexos:** Escolha se deseja baixar ou não anexos.
+- **Baixar Vídeos:** Escolha se deseja baixar vídeos quando disponíveis.
+- **Salvar Informações:** Salve informações em um arquivo `.txt`, como título, data de postagem, data de importação e conteúdo.
+- **Salvar Comentários:** Salve comentários do post no arquivo `.txt`. Para salvar os comentários, a opção de salvar informações deve estar ativada.
 
 ![Settings](img/postconfig.png)
 
 ### Configuração de Perfil
 
-No modo de configuração de perfil, o usuário pode definir o que deseja baixar dos posts, similar às opções de configuração de posts. O diferencial é que o usuário pode filtrar por posts que tenham ou não tenham imagens, podendo escolher uma ou outra, ou ambas as versões.
+No modo de configuração de perfil, o usuário pode definir o que deseja baixar dos posts, de maneira similar às opções de configuração de posts. O diferencial é que o usuário pode filtrar por posts que tenham ou não tenham imagens, podendo escolher uma ou outra, ou ambas as versões.
 
 ![Settings](img/configprofile.png)
 
