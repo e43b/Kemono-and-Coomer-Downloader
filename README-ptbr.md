@@ -71,9 +71,47 @@ Funciona apenas em perfis do site Kemono, pois o Coomer não possui essa funçã
 
 ## Organização dos Arquivos
 
-Os vídeos são salvos em pastas para facilitar a organização. É criada uma pasta para os episódios do anime legendado e outra para os episódios do anime dublado.
+Os posts são salvos em pastas para facilitar a organização. A estrutura das pastas é a seguinte:
 
-![Arquivos](img/arquivos.png)
+1. **Plataforma:** Uma pasta principal é criada para a plataforma (Kemono ou Coomer).
+2. **Autor:** Dentro da pasta da plataforma, é criada uma pasta para cada autor.
+3. **Posts:** Dentro da pasta do autor, há uma pasta `posts` onde são salvos os posts. Cada post é salvo em uma subpasta identificada pelo ID do post.
+4. **DMs:** Dentro da pasta do autor, há também uma pasta `DMs` onde são salvos os arquivos `.txt` das DMs.
+
+Exemplo da estrutura de pastas:
+
+```
+Kemono-and-Coomer-Downloader/
+│
+├── kemono/                               # Pasta da plataforma Kemono
+│   ├── autor1/                           # Pasta do autor 1
+│   │   ├── posts/                        # Pasta de posts do autor 1
+│   │   │   ├── postID1/                  # Pasta do post com ID 1
+│   │   │   │   ├── conteudo_do_post      # Conteúdo do post
+│   │   │   │   └── ...                   # Outros arquivos do post
+│   │   │   └── postID2/                  # Pasta do post com ID 2
+│   │   │       ├── conteudo_do_post      # Conteúdo do post
+│   │   │       └── ...                   # Outros arquivos do post
+│   │   └── DMs/                          # Pasta de DMs do autor 1
+│   │       ├── dm1.txt                   # DM 1
+│   │       ├── dm2.txt                   # DM 2
+│   │       └── ...                       # Outras DMs
+│   └── autor2/                           # Pasta do autor 2
+│       ├── posts/                        # Pasta de posts do autor 2
+│       └── DMs/                          # Pasta de DMs do autor 2
+│
+└── coomer/                               # Pasta da plataforma Coomer
+    ├── autor1/                           # Pasta do autor 1
+    │   ├── posts/                        # Pasta de posts do autor 1
+    │   └── DMs/                          # Pasta de DMs do autor 1 (se aplicável)
+    └── autor2/                           # Pasta do autor 2
+        ├── posts/                        # Pasta de posts do autor 2
+        └── DMs/                          # Pasta de DMs do autor 2 (se aplicável)
+```
+
+![Arquivos](img/arquivo.png)
+
+![Arquivos](img/arquivo.png)
 
 ## Configuração
 
