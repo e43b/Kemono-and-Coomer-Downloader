@@ -110,7 +110,7 @@ def baixar_conteudo(url, config):
 
     post_id = soup.find("meta", attrs={"name": "id"})["content"]
     post_folder = post_id
-    post_path = os.path.join(base_folder, author_folder, post_folder)
+    post_path = os.path.join(base_folder, author_folder, "posts", post_folder)
     os.makedirs(post_path, exist_ok=True)
 
     if config["salvar_info_txt"]:
