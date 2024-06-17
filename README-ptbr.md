@@ -111,8 +111,6 @@ Kemono-and-Coomer-Downloader/
 
 ![Arquivos](img/arquivo.png)
 
-![Arquivos](img/arquivo.png)
-
 ## Configuração
 
 Página para personalizar o programa a sua necessidade
