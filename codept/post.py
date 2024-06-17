@@ -60,7 +60,7 @@ def baixar_conteudo(url):
     post_folder = post_id
 
     # Caminho completo da pasta do post
-    post_path = os.path.join(base_folder, author_folder, post_folder)
+    post_path = os.path.join(base_folder, author_folder, "posts", post_folder)
 
     # Criando as pastas se não existirem
     os.makedirs(post_path, exist_ok=True)
