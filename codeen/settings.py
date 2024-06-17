@@ -2,7 +2,7 @@ import os
 import json
 
 # URL of the documentation
-DOCUMENTATION_URL = "https://github.com/e43b/Kemono-and-Coomer-Downloader/blob/main/codept/doc.md"
+DOCUMENTATION_URL = "https://github.com/e43b/Kemono-and-Coomer-Downloader/blob/main/codeen/doc.md"
 
 # Function to load configurations from a JSON file
 def load_configurations(file_name):
