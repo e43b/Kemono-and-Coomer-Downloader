@@ -129,6 +129,7 @@ def main():
         elif escolha == '3':
             # Aqui você colocaria a execução do script main.py
             print("\nExecutando script main.py...")
+            os.system('python main.py')
         elif escolha == '4':
             print("\nSaindo do programa...")
             break
