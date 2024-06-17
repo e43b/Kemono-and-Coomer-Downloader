@@ -36,7 +36,7 @@ With this tool, you can download single posts, multiple posts sequentially, down
 
 ## Libraries
 
-The required libraries are: `requests` and `beautifulsoup4`. When running the script for the first time, if the libraries are not installed, you will be prompted to install them. Just type "s" and they will be installed automatically.
+The required libraries are: `requests` and `beautifulsoup4`. When running the script for the first time, if the libraries are not installed, you will be prompted to install them. Just type "y" and they will be installed automatically.
 
 ![Requirements](img/bibliotecas.png)
 
