@@ -2,14 +2,6 @@
 
 ###### [![](img/en-flag.svg) English](README.md) | [![](img/br.png) Português](README-ptbr.md)
 
-### Apoie o Projeto
-
-Se você acha esta ferramenta útil e gostaria de apoiar seu desenvolvimento contínuo, considere fazer uma doação. Sua contribuição ajuda a manter o projeto ativo e a desenvolver novas funcionalidades.
-
-### Faça uma doação acessando [este link](https://oxapay.com/donate/40874860).
-
-
-
 O **Kemono and Coomer Downloader** é uma ferramenta que permite baixar posts dos sites [Kemono](https://kemono.su/) e [Coomer](https://coomer.su/).
 
 Com essa ferramenta, é possível baixar posts únicos, múltiplos posts sequencialmente, baixar todos os posts de um perfil e baixar todas as DMs de um perfil do Kemono. Também é possível configurar o que deseja salvar nos posts: anexos, vídeos, criar um arquivo `.txt` com informações sobre o post, entre outros. Para mais informações, acesse a [documentação](https://github.com/e43b/Kemono-and-Coomer-Downloader/blob/main/codept/doc.md).
@@ -152,18 +144,22 @@ Este projeto é de código aberto e você é encorajado a contribuir para melhor
 
 ## Autor
 
-Desenvolvido e mantido por [E43b](https://github.com/e43b), o Kemono and Coomer Downloader visa simplificar o processo de download de posts do Kemono e Coomer, proporcionando uma experiência mais acessível e organizada.
+Desenvolvido e mantido por [E43b](https://github.com/e43b), o Kemono and Coomer Downloader visa simplificar o processo de download de posts dos sites Kemono e Coomer, proporcionando uma experiência mais acessível e organizada.
 
 ## Suporte
 
-Caso tenha problemas ou encontre bugs, acesse o [Discord](https://discord.gg/TaPhfXawcE).
+Caso tenha problemas, encontre bugs ou tenha alguma dúvida, acesse o nosso [Discord](https://discord.gg/TaPhfXawcE) para obter ajuda e suporte.
 
 ## Links
 
-- Repositório do Projeto: [https://github.com/e43b/Kemono-and-Coomer-Downloader/](https://github.com/e43b/Kemono-and-Coomer-Downloader/)
-- Site Kemono: [https://kemono.su/](https://kemono.su/)
-- Site Coomer: [https://coomer.su/](https://coomer.su/)
+- **Repositório do Projeto:** [https://github.com/e43b/Kemono-and-Coomer-Downloader/](https://github.com/e43b/Kemono-and-Coomer-Downloader/)
+- **Site Kemono:** [https://kemono.su/](https://kemono.su/)
+- **Site Coomer:** [https://coomer.su/](https://coomer.su/)
 
----
+### Apoie o Projeto
+
+Se você acha esta ferramenta útil e gostaria de apoiar seu desenvolvimento contínuo, considere fazer uma doação. Sua contribuição ajuda a manter o projeto ativo e a desenvolver novas funcionalidades.
+
+#### Faça uma doação acessando [este link](https://oxapay.com/donate/40874860).
 
 Esperamos que esta ferramenta seja útil para você!
