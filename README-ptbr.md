@@ -6,7 +6,7 @@
 
 Se você acha esta ferramenta útil e gostaria de apoiar seu desenvolvimento contínuo, considere fazer uma doação. Sua contribuição ajuda a manter o projeto ativo e a desenvolver novas funcionalidades.
 
-#### Faça uma doação acessando [este link](https://oxapay.com/donate/40874860).
+### Faça uma doação acessando [este link](https://oxapay.com/donate/40874860).
 
 
 
