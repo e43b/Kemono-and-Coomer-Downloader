@@ -157,7 +157,6 @@ If you encounter problems, find bugs, or have any questions, visit our [Discord]
 - **Coomer Site:** [https://coomer.su/](https://coomer.su/)
 
 
-
 ### Support the Project
 
 If you find this tool useful and would like to support its continued development, consider making a donation. Your contribution helps keep the project active and develop new features.
