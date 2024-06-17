@@ -23,8 +23,11 @@ def extract_post_info(post_card, base_url):
 
 # Função para extrair a quantidade total de posts
 def get_total_posts(soup):
-    total_posts_text = soup.find('small').text.strip()
-    total_posts = int(total_posts_text.split(' of ')[1])
+    total_posts_text = soup.find('small')
+    if total_posts_text:
+        total_posts = int(total_posts_text.text.strip().split(' of ')[1])
+    else:
+        total_posts = None
     return total_posts
 
 # Função para salvar os posts em um arquivo de texto
@@ -70,7 +73,7 @@ def salvar_info_post(soup, folder, salvar_comentarios_txt):
                 attachment_name = attachment_tag.text.strip().split(" ")[-1]
                 f.write(f"- {attachment_name}: {attachment_url}\n")
                 browse_tag = attachment_tag.find_next("a", href=True, string="browse »")
-                if (browse_tag):
+                if browse_tag:
                     browse_url = urlparse(url)._replace(path=browse_tag["href"]).geturl()
                     f.write(f"  Conteúdo do anexo: {browse_url}\n")
 
@@ -175,7 +178,10 @@ while True:
 
     if page_number == 0:
         total_posts = get_total_posts(soup)
-        total_pages = (total_posts + 49) // 50
+        if total_posts:
+            total_pages = (total_posts + 49) // 50
+        else:
+            total_pages = 1
 
     post_cards = soup.find_all('article', class_='post-card post-card--preview')
     if not post_cards:
