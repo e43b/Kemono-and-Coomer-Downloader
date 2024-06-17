@@ -156,11 +156,11 @@ def baixar_conteudo(url, config):
     print(f"Conteúdo do post {url} baixado com sucesso!")
 
 # Carregar configurações do arquivo JSON
-with open("profileconfig.json", "r") as f:
+with open("code/profileconfig.json", "r") as f:
     config = json.load(f)
 
 # Carregar configurações do profileconfig.json
-with open("profileconfig.json", "r") as f:
+with open("code/profileconfig.json", "r") as f:
     profile_config = json.load(f)
 
 # URL base fornecida
