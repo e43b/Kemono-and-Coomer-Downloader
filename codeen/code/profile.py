@@ -42,7 +42,7 @@ def save_posts_to_file(posts, filename="posts_info.txt"):
             f.write("\n" + "-"*40 + "\n\n")
 
 # Função para salvar informações do post em um arquivo de texto
-def salvar_info_post(soup, folder, salvar_comentarios_txt):
+def salvar_info_post(soup, folder, save_comments_txt):
     info_file_path = os.path.join(folder, "info.txt")
     with open(info_file_path, "w", encoding="utf-8") as f:
         title_tag = soup.find("h1", class_="post__title")
@@ -84,7 +84,7 @@ def salvar_info_post(soup, folder, salvar_comentarios_txt):
                 content_text = content_pre.text.strip()
                 f.write(f"\nConteúdo do Post:\n{content_text}\n\n")
 
-        if salvar_comentarios_txt:
+        if save_comments_txt:
             comments_section = soup.find("footer", class_="post__footer")
             if comments_section:
                 comments = comments_section.find_all("article", class_="comment")
@@ -116,8 +116,8 @@ def baixar_conteudo(url, config):
     post_path = os.path.join(base_folder, author_folder, "posts", post_folder)
     os.makedirs(post_path, exist_ok=True)
 
-    if config["salvar_info_txt"]:
-        salvar_info_post(soup, post_path, config["salvar_comentarios_txt"])
+    if config["save_info_txt"]:
+        salvar_info_post(soup, post_path, config["save_comments_txt"])
 
     links_baixados = set()
     image_tags = soup.find_all("a", class_="fileThumb")
@@ -131,7 +131,7 @@ def baixar_conteudo(url, config):
                 f.write(image_response.content)
             links_baixados.add(image_url)
 
-    if config["baixar_anexos"]:
+    if config["download_attachments"]:
         attachment_tags = soup.find_all("a", class_="post__attachment-link")
         for index, attachment_tag in enumerate(attachment_tags):
             attachment_url = attachment_tag["href"]
@@ -142,7 +142,7 @@ def baixar_conteudo(url, config):
                     f.write(attachment_response.content)
                 links_baixados.add(attachment_url)
 
-    if config["baixar_videos"]:
+    if config["download_videos"]:
         video_tags = soup.find_all("a", class_="post__attachment-link")
         for index, video_tag in enumerate(video_tags):
             video_url = video_tag["href"]
@@ -201,11 +201,11 @@ filtered_posts = []
 for post in all_posts:
     has_media = post['image'] != "No image available" or post['attachments'] != "No attachments"
 
-    if profile_config['ambos']:
+    if profile_config['both']:
         filtered_posts.append(post)
-    elif profile_config['arquivos'] and has_media:
+    elif profile_config['files_only'] and has_media:
         filtered_posts.append(post)
-    elif profile_config['sem_arquivos'] and not has_media:
+    elif profile_config['no_files'] and not has_media:
         filtered_posts.append(post)
 
 # Salvar as informações dos posts filtrados em um arquivo de texto
