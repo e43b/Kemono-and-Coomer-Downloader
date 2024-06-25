@@ -6,6 +6,10 @@ O **Kemono and Coomer Downloader** é uma ferramenta que permite baixar posts do
 
 Com essa ferramenta, é possível baixar posts únicos, múltiplos posts sequencialmente, baixar todos os posts de um perfil e baixar todas as DMs de um perfil do Kemono. Também é possível configurar o que deseja salvar nos posts: anexos, vídeos, criar um arquivo `.txt` com informações sobre o post, entre outros. Para mais informações, acesse a [documentação](https://github.com/e43b/Kemono-and-Coomer-Downloader/blob/main/codept/doc.md).
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=e43b/Kemono-and-Coomer-Downloader&type=Date)](https://star-history.com/#e43b/Kemono-and-Coomer-Downloader&Date)
+
 ## Como Usar
 
 1. **Certifique-se de ter o Python instalado em seu sistema.**
