@@ -13,9 +13,22 @@ download_videos = config["download_videos"]
 save_info_txt = config["save_info_txt"]
 save_comments_txt = config["save_comments_txt"]
 
-# Request URL(s) from the user
-urls_input = input("Please enter the post URL or URLs separated by commas: ")
-urls = [url.strip() for url in urls_input.split(",")]
+# Request URL(s) or JSON file path from the user
+input_choice = input("Enter 1 to input URLs directly or 2 to provide a JSON file path: ")
+
+if input_choice == "1":
+    urls_input = input("Please enter the post URL or URLs separated by commas: ")
+    urls = [url.strip() for url in urls_input.split(",")]
+elif input_choice == "2":
+    json_path = input("Please enter the JSON file path: ")
+    with open(json_path, "r") as f:
+        data = json.load(f)
+        urls = []
+        for page in data.get("pages", []):
+            urls.extend(page.get("posts", []))
+else:
+    print("Invalid choice. Exiting.")
+    exit()
 
 # Function to download content from a URL
 def baixar_conteudo(url):

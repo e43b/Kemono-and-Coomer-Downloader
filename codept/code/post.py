@@ -13,9 +13,22 @@ baixar_videos = config["baixar_videos"]
 salvar_info_txt = config["salvar_info_txt"]
 salvar_comentarios_txt = config["salvar_comentarios_txt"]
 
-# Solicitar URL(s) ao usuário
-urls_input = input("Por favor, insira a URL do post ou as URLs separadas por vírgulas: ")
-urls = [url.strip() for url in urls_input.split(",")]
+# Solicitar URL(s) ou caminho do arquivo JSON ao usuário
+input_choice = input("Digite 1 para inserir URLs diretamente ou 2 para fornecer o caminho de um arquivo JSON: ")
+
+if input_choice == "1":
+    urls_input = input("Por favor, insira a URL do post ou as URLs separadas por vírgulas: ")
+    urls = [url.strip() for url in urls_input.split(",")]
+elif input_choice == "2":
+    json_path = input("Por favor, insira o caminho do arquivo JSON: ")
+    with open(json_path, "r") as f:
+        data = json.load(f)
+        urls = []
+        for page in data.get("pages", []):
+            urls.extend(page.get("posts", []))
+else:
+    print("Escolha inválida. Saindo.")
+    exit()
 
 # Função para baixar conteúdo de uma URL
 def baixar_conteudo(url):

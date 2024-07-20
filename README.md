@@ -28,7 +28,7 @@ With this tool, you can download single posts, multiple posts sequentially, down
 4. **Select the desired language:**
 
     - The `codeen` folder contains the English version.
-    - The `codept` folder contains the Portuguese version.
+    - The `codeen` folder contains the Portuguese version.
 
 5. **Run the main script:**
 
@@ -54,13 +54,84 @@ The project homepage presents the main options available to facilitate the use o
 
 ### Download Post
 
-To download specific posts, just enter the post link. If you want to download multiple posts, separate the links with a comma. Example:
+#### Option 1: Download posts manually
+
+To download specific posts, simply enter the post links separated by commas. This option is ideal for downloading a few posts. Example:
 
 ```sh
-https://kemono.su/patreon/user/133054/post/82477856 , https://coomer.su/fansly/user/285310079517863936/post/614339200069672960 , https://coomer.su/fansly/user/285310079517863936/post/611301068940255234
+https://kemono.su/patreon/user/133054/post/82477856, https://coomer.su/fansly/user/285310079517863936/post/614339200069672960, https://coomer.su/fansly/user/285310079517863936/post/611301068940255234
 ```
 
 ![Posts](img/posts.png)
+
+#### Option 2: Download posts from a JSON file
+
+For those who want to download dozens or more posts from a profile at once, we have a robust alternative:
+
+1. **Generate links from a profile:**
+
+   Navigate to the `codeen` directory and run the command:
+
+   ```sh
+   python links.py <profile_url> <parameter>
+   ```
+
+   Examples:
+
+   - To extract links of all posts from the profile:
+
+     ```sh
+     python links.py https://coomer.su/fansly/user/285310079517863936 all
+     ```
+
+   - To extract links of posts from pages 1 to 5:
+
+     ```sh
+     python links.py https://coomer.su/fansly/user/285310079517863936 "1 to 5"
+     ```
+
+   - To extract links of posts from pages 1, 6, and 9:
+
+     ```sh
+     python links.py https://coomer.su/fansly/user/285310079517863936 "1, 6, 9"
+     ```
+
+   - To extract links from all available pages, excluding pages 8 to 10 and 25:
+
+     ```sh
+     python links.py https://coomer.su/fansly/user/285310079517863936 "-8 to -10, -25"
+     ```
+
+   ![img](img/linkextract.png)
+
+2. **Save the links in a JSON file:**
+
+   After running the command, a directory called `links` will be created containing a JSON file. Example: `links/coomer_su_285310079517863936_fansly.json`. This file will have the extracted links.
+
+3. **Download posts using the JSON:**
+
+   Run the main script:
+
+   ```sh
+   python main.py
+   ```
+
+   Select option 1 to download posts.
+
+   ![img](img/home.png)
+
+   Choose option 1 to download posts from manually added links or option 2 to use the generated JSON file that contains all the links you want to download.
+
+   ![img](img/input.png)
+
+4. **Start the download:**
+
+   Enter the path to the generated JSON file: `links/coomer_su_285310079517863936_fansly.json`.
+
+   The download will start, and all the links available in the JSON file will be downloaded.
+
+   ![img](img/downloadlog.png)
+   ![img](img/downloadfile.png)
 
 ### Download All Posts from a Profile
 
