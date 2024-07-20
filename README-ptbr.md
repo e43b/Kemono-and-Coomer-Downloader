@@ -54,13 +54,84 @@ A página inicial do projeto apresenta as principais opções disponíveis para 
 
 ### Baixar Post
 
-Para baixar posts específicos, basta inserir o link do post. Se desejar baixar vários posts, separe os links por vírgula. Exemplo:
+#### Opção 1: Baixar posts manualmente
+
+Para baixar posts específicos, basta inserir os links dos posts, separando-os por vírgula. Esta opção é ideal para baixar alguns poucos posts. Exemplo:
 
 ```sh
-https://kemono.su/patreon/user/133054/post/82477856 , https://coomer.su/fansly/user/285310079517863936/post/614339200069672960 , https://coomer.su/fansly/user/285310079517863936/post/611301068940255234
+https://kemono.su/patreon/user/133054/post/82477856, https://coomer.su/fansly/user/285310079517863936/post/614339200069672960, https://coomer.su/fansly/user/285310079517863936/post/611301068940255234
 ```
 
 ![Posts](img/posts.png)
+
+#### Opção 2: Baixar posts de um json
+
+Para quem deseja baixar dezenas ou mais posts de um perfil de uma vez só, temos uma alternativa robusta:
+
+1. **Gerar links dos posts de um perfil:**
+
+   Entre na pasta `codept` e execute o comando:
+
+   ```sh
+   python links.py <perfil_url> <parâmetro>
+   ```
+
+   Exemplos:
+
+   - Para extrair links de todos os posts do perfil:
+
+     ```sh
+     python links.py https://coomer.su/fansly/user/285310079517863936 all
+     ```
+
+   - Para extrair links de posts das páginas 1 até 5:
+
+     ```sh
+     python links.py https://coomer.su/fansly/user/285310079517863936 "1 to 5"
+     ```
+
+   - Para extrair links de posts das páginas 1, 6 e 9:
+
+     ```sh
+     python links.py https://coomer.su/fansly/user/285310079517863936 "1, 6, 9"
+     ```
+
+   - Para extrair links de todas as páginas disponíveis, excluindo as páginas 8 até 10 e a 25:
+
+     ```sh
+     python links.py https://coomer.su/fansly/user/285310079517863936 "-8 to -10, -25"
+     ```
+
+   ![img](img/linkextract.png)
+
+2. **Salvar os links em um arquivo JSON:**
+
+   Após executar o comando, será criada uma pasta chamada `links` contendo um arquivo JSON. Exemplo: `links/coomer_su_285310079517863936_fansly.json`. Este arquivo terá os links extraídos.
+
+3. **Baixar posts usando o JSON:**
+
+   Execute o script principal:
+
+   ```sh
+   python main.py
+   ```
+
+   Selecione a opção 1 para baixar posts.
+
+   ![img](img/home.png)
+
+   Escolha a opção 1 para baixar posts de links adicionados manualmente ou a opção 2 para usar o JSON que foi gerado e contém todos os links que deseja baixar.
+
+   ![img](img/input.png)
+
+4. **Iniciar download:**
+
+   Insira o caminho do JSON gerado: `links/coomer_su_285310079517863936_fansly.json`.
+
+   O download será iniciado e todos os links disponíveis no JSON serão baixados.
+
+   ![img](img/downloadlog.png)
+   ![img](img/downloadfile.png)
 
 ### Baixar Todos os Posts de um Perfil
 
