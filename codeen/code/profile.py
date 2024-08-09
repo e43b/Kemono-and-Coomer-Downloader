@@ -177,7 +177,6 @@ def baixar_conteudo(url, config):
                     try:
                         with zipfile.ZipFile(file_path, 'r') as zip_ref:
                             # Set the extraction path
-                            #extraction_path = extract_to if extract_to else dirpath
                             print(f"Extracting {file_path} to {dirpath}")
                             zip_ref.extractall(dirpath)
                         os.remove(file_path)

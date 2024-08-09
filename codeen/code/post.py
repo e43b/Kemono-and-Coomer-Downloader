@@ -225,7 +225,6 @@ def baixar_conteudo(url):
     print(f"Content from post {url} downloaded successfully!")
 
     # Unzip all potential Zip files
-    #def unzip_files_in_directory(root_dir, extract_to=None):
     if config["unzip"]:
         for dirpath, _, filenames in os.walk(post_path):
             for filename in filenames:
@@ -234,7 +233,6 @@ def baixar_conteudo(url):
                     try:
                         with zipfile.ZipFile(file_path, 'r') as zip_ref:
                             # Set the extraction path
-                            #extraction_path = extract_to if extract_to else dirpath
                             print(f"Extracting {file_path} to {dirpath}")
                             zip_ref.extractall(dirpath)
                         os.remove(file_path)
@@ -242,8 +240,6 @@ def baixar_conteudo(url):
                         print(f"Warning: '{file_path}' is not a valid zip file.")
                     except Exception as e:
                         print(f"Error extracting '{file_path}': {e}")
-    #root_dir = author_folder
-    #unzip_files_in_directory(root_dir)
 
 # Iterate over all provided URLs and download the content
 for url in urls:
