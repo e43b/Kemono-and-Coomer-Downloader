@@ -53,6 +53,7 @@ def configure_general_system():
     print("2. Download Videos:", "Enabled" if configurations.get('download_videos', True) else "Disabled")
     print("3. Save Information:", "Enabled" if configurations.get('save_info_txt', True) else "Disabled")
     print("4. Save Comments:", "Enabled" if configurations.get('save_comments_txt', True) else "Disabled")
+    print("5. Unzip all zipfiles automatically after download:", "Enabled" if configurations.get('unzip',True) else "Disabled")
 
     option = input("\nEnter the number of the option you want to configure or '0' to go back: ")
 
@@ -64,6 +65,8 @@ def configure_general_system():
         configurations['save_info_txt'] = not configurations.get('save_info_txt', True)
     elif option == '4':
         configurations['save_comments_txt'] = not configurations.get('save_comments_txt', True)
+    elif option == '5':
+        configurations['unzip'] = not configurations.get('unzip', True)
     elif option == '0':
         return
 
@@ -83,6 +86,7 @@ def configure_profile_system():
     print("5. Save Only Posts with Files:", "Enabled" if configurations.get('files_only', False) else "Disabled")
     print("6. Save Only Posts without Files:", "Enabled" if configurations.get('no_files', False) else "Disabled")
     print("7. Save Both Types of Posts:", "Enabled" if configurations.get('both', True) else "Disabled")
+    print("8. Unzip all zipfiles automatically after download:", "Enabled" if configurations.get('unzip',True) else "Disabled")
 
     option = input("\nEnter the number of the option you want to configure or '0' to go back: ")
 
@@ -109,6 +113,8 @@ def configure_profile_system():
         if configurations['both']:
             configurations['files_only'] = False
             configurations['no_files'] = False
+    elif option == '8':
+        configurations['unzip'] = not configurations.get('unzip', True)
     elif option == '0':
         return
 

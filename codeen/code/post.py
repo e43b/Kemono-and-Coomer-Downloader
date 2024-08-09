@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import json
+import zipfile
 
 # Load configurations from JSON file
 with open("code/config.json", "r") as f:
@@ -169,6 +170,17 @@ def baixar_conteudo(url):
             # Adding the URL to the set of downloaded links
             links_baixados.add(image_url)
 
+    def sanitize_filename(filename):
+        # Replace or remove any characters that are not suitable for filenames
+        invalid_chars = r'<>:"/\|?*'
+        for char in invalid_chars:
+            filename = filename.replace(char, "")
+        # Filter 'Download' from filename 
+        words_to_filter = ["Download"]
+        for word in words_to_filter:
+            filename = filename.replace(word, "")
+        return filename.strip()
+    
     # Checking if the user wants to download post attachments
     if download_attachments:
         # Finding attachment tags
@@ -181,8 +193,9 @@ def baixar_conteudo(url):
             if attachment_url not in links_baixados:
                 # Downloading the attachment
                 attachment_response = requests.get(attachment_url)
-                # Getting the file name
-                filename = attachment_tag["download"]
+                # Getting and correcting the filename
+                filename = attachment_tag.text.strip()
+                filename = sanitize_filename(filename)
                 # Saving the attachment in the post folder
                 with open(os.path.join(post_path, filename), "wb") as f:
                     f.write(attachment_response.content)
@@ -210,6 +223,27 @@ def baixar_conteudo(url):
                 links_baixados.add(video_url)
 
     print(f"Content from post {url} downloaded successfully!")
+
+    # Unzip all potential Zip files
+    #def unzip_files_in_directory(root_dir, extract_to=None):
+    if config["unzip"]:
+        for dirpath, _, filenames in os.walk(post_path):
+            for filename in filenames:
+                if filename.lower().endswith('.zip'):
+                    file_path = os.path.join(dirpath, filename)
+                    try:
+                        with zipfile.ZipFile(file_path, 'r') as zip_ref:
+                            # Set the extraction path
+                            #extraction_path = extract_to if extract_to else dirpath
+                            print(f"Extracting {file_path} to {dirpath}")
+                            zip_ref.extractall(dirpath)
+                        os.remove(file_path)
+                    except zipfile.BadZipFile:
+                        print(f"Warning: '{file_path}' is not a valid zip file.")
+                    except Exception as e:
+                        print(f"Error extracting '{file_path}': {e}")
+    #root_dir = author_folder
+    #unzip_files_in_directory(root_dir)
 
 # Iterate over all provided URLs and download the content
 for url in urls:

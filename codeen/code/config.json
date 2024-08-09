@@ -2,5 +2,6 @@
     "download_attachments": true,
     "download_videos": true,
     "save_info_txt": true,
-    "save_comments_txt": true
+    "save_comments_txt": true,
+    "unzip": true
 }
