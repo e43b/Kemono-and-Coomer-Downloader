@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 import json
 
-# Função para extrair informações de um post
+# Function to extract information from a post
 def extract_post_info(post_card, base_url):
     post_info = {}
     post_info['link'] = urljoin(base_url, post_card.find('a')['href'])
@@ -21,7 +21,7 @@ def extract_post_info(post_card, base_url):
 
     return post_info
 
-# Função para extrair a quantidade total de posts
+# Function to extract the total number of posts
 def get_total_posts(soup):
     total_posts_text = soup.find('small')
     if total_posts_text:
@@ -30,35 +30,35 @@ def get_total_posts(soup):
         total_posts = None
     return total_posts
 
-# Função para salvar os posts em um arquivo de texto
+# Function to save posts to a text file
 def save_posts_to_file(posts, filename="posts_info.txt"):
     with open(filename, 'w', encoding='utf-8') as f:
         for post in posts:
             f.write(f"Link: {post['link']}\n")
-            f.write(f"Título: {post['title']}\n")
-            f.write(f"Número de arquivos: {post['attachments']}\n")
-            f.write(f"Data do post: {post['date']}\n")
-            f.write(f"Capa: {post['image']}\n")
+            f.write(f"Title: {post['title']}\n")
+            f.write(f"Number of files: {post['attachments']}\n")
+            f.write(f"Date of post: {post['date']}\n")
+            f.write(f"Cover: {post['image']}\n")
             f.write("\n" + "-"*40 + "\n\n")
 
-# Função para salvar informações do post em um arquivo de texto
+            # Function to save post information to a text file
 def salvar_info_post(soup, folder, save_comments_txt):
     info_file_path = os.path.join(folder, "info.txt")
     with open(info_file_path, "w", encoding="utf-8") as f:
         title_tag = soup.find("h1", class_="post__title")
         if title_tag:
             title = " ".join([span.text for span in title_tag.find_all("span")])
-            f.write(f"Título: {title}\n\n")
+            f.write(f"Title: {title}\n\n")
 
         published_tag = soup.find("div", class_="post__published")
         if published_tag:
             published_date = published_tag.text.strip().split(": ")[1]
-            f.write(f"Data de publicação: {published_date}\n\n")
+            f.write(f"Date of publication: {published_date}\n\n")
 
         imported_tag = soup.find("div", class_="post__added")
         if imported_tag and ": " in imported_tag.text:
             imported_date = imported_tag.text.strip().split(": ")[1]
-            f.write(f"Data de importação: {imported_date}\n\n")
+            f.write(f"Import date: {imported_date}\n\n")
 
         tags_section = soup.find("section", id="post-tags")
         if tags_section:
@@ -67,7 +67,7 @@ def salvar_info_post(soup, folder, save_comments_txt):
 
         attachment_tags = soup.find_all("a", class_="post__attachment-link")
         if attachment_tags:
-            f.write("Anexos:\n")
+            f.write("Attachments:\n")
             for attachment_tag in attachment_tags:
                 attachment_url = attachment_tag["href"]
                 attachment_name = attachment_tag.text.strip().split(" ")[-1]
@@ -75,28 +75,28 @@ def salvar_info_post(soup, folder, save_comments_txt):
                 browse_tag = attachment_tag.find_next("a", href=True, string="browse »")
                 if browse_tag:
                     browse_url = urlparse(url)._replace(path=browse_tag["href"]).geturl()
-                    f.write(f"  Conteúdo do anexo: {browse_url}\n")
+                    f.write(f"  Attachment content: {browse_url}\n")
 
         content_div = soup.find("div", class_="post__content")
         if content_div:
             content_pre = content_div.find("pre")
             if content_pre:
                 content_text = content_pre.text.strip()
-                f.write(f"\nConteúdo do Post:\n{content_text}\n\n")
+                f.write(f"\nPost content:\n{content_text}\n\n")
 
         if save_comments_txt:
             comments_section = soup.find("footer", class_="post__footer")
             if comments_section:
                 comments = comments_section.find_all("article", class_="comment")
                 if comments:
-                    f.write("Comentários:\n")
+                    f.write("Comments:\n")
                     for comment in comments:
                         comment_author = comment.find("a", class_="comment__name").text.strip()
                         comment_text = comment.find("p", class_="comment__message").text.strip()
                         comment_date = comment.find("time", class_="timestamp")["datetime"]
                         f.write(f"- {comment_author} ({comment_date}): {comment_text}\n\n")
 
-# Função para baixar conteúdo de uma URL
+# Function to download content from a URL
 def baixar_conteudo(url, config):
     response = requests.get(url)
     html_content = response.text
@@ -153,23 +153,23 @@ def baixar_conteudo(url, config):
                     f.write(video_response.content)
                 links_baixados.add(video_url)
 
-    print(f"Conteúdo do post {url} baixado com sucesso!")
+    print(f"Post content from {url} downloaded successfully!")
 
-# Carregar configurações do arquivo JSON
+# Load settings from the JSON file
 with open("code/profileconfig.json", "r") as f:
     config = json.load(f)
 
-# Carregar configurações do profileconfig.json
+# Load settings from profileconfig.json
 with open("code/profileconfig.json", "r") as f:
     profile_config = json.load(f)
 
-# URL base fornecida
-base_url = input("Por favor, insira a URL do Perfil: ")
+# Provided base URL
+base_url = input("Please enter the profile URL: ")
 
-# Variável para armazenar todos os posts
+# Variable to store all posts
 all_posts = []
 
-# Iterar sobre as páginas para coletar todas as postagens
+# Iterate over pages to collect all posts
 page_number = 0
 while True:
     url = f"{base_url}?o={page_number * 50}"
@@ -196,7 +196,7 @@ while True:
 
     page_number += 1
 
-# Filtrar os posts com base nas configurações de profileconfig.json
+# Filter posts based on the settings in profileconfig.json
 filtered_posts = []
 for post in all_posts:
     has_media = post['image'] != "No image available" or post['attachments'] != "No attachments"
@@ -208,11 +208,11 @@ for post in all_posts:
     elif profile_config['no_files'] and not has_media:
         filtered_posts.append(post)
 
-# Salvar as informações dos posts filtrados em um arquivo de texto
+# Save filtered post information to a text file
 save_posts_to_file(filtered_posts)
 
-# Iterar sobre todos os links dos posts filtrados e baixar o conteúdo
+# Iterate over all links of the filtered posts and download the content
 for post in filtered_posts:
     baixar_conteudo(post['link'], config)
 
-print(f"Informações de {len(filtered_posts)} posts salvas e conteúdo baixado com sucesso!")
+print(f"Information for {len(filtered_posts)} posts saved and content downloaded successfully!")
