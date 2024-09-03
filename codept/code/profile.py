@@ -168,12 +168,12 @@ with open("code/profileconfig.json", "r") as f:
 # URL base fornecida
 base_url = input("Por favor, insira a URL do Perfil: ")
 
-input_choice = input("Press 1 to download all, or 2 to provide starting and ending post URLs: ")
+input_choice = input("Digite 1 para baixar todos, ou 2 para fornecer os URLs do primeiro e do último post: ")
 
 mode = "all"
 if input_choice == "2":
-    start_url = input("Provide starting/newer post URL (enter 0 for newest post): ")
-    end_url = input("Provide ending/older post URL (enter 0 for oldest post): ")
+    start_url = input("Forneça o URL do post inicial/mais recente (digite 0 para o post mais recente): ")
+    end_url = input("Forneça o URL do post final/mais antigo (digite 0 para o post mais antigo): ")
 
     start_id = int(start_url.split('/')[-1])
     end_id = int(end_url.split('/')[-1])
@@ -183,19 +183,19 @@ if input_choice == "2":
             mode = "range"
             if start_id < end_id:
                 start_id, end_id = end_id, start_id
-            print("Downloading posts between", start_id, "and", end_id, "...")
+            print("Baixando posts entre", start_id, "e", end_id, "...")
         else:
             mode = "older"
-            print("Downloading posts older than", start_id, "...")
+            print("Baixando posts mais antigos que", start_id, "...")
     else:
         if end_id:
             mode = "newer"
-            print("Downloading posts newer than", end_id, "...")
+            print("Baixando posts mais recentes que", end_id, "...")
         else:
             mode = "all"
 
 if mode == "all":
-    print("Downloading all posts ...")
+    print("Baixando todos os posts ...")
 
 # Variável para armazenar todos os posts
 all_posts = []
