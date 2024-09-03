@@ -9,6 +9,8 @@ def extract_post_info(post_card, base_url):
     post_info = {}
     post_info['link'] = urljoin(base_url, post_card.find('a')['href'])
     post_info['title'] = post_card.find('header', class_='post-card__header').text.strip()
+    
+    post_info['id'] = int(post_card.find('a')['href'].split('/')[-1])
 
     attachments_div = post_card.find('div', string=lambda x: x and 'attachments' in x.lower())
     post_info['attachments'] = attachments_div.text.strip() if attachments_div else "No attachments"
@@ -166,6 +168,35 @@ with open("code/profileconfig.json", "r") as f:
 # Provided base URL
 base_url = input("Please enter the profile URL: ")
 
+input_choice = input("Press 1 to download all, or 2 to provide starting and ending post URLs: ")
+
+mode = "all"
+if input_choice == "2":
+    start_url = input("Provide starting/newer post URL (enter 0 for newest post): ")
+    end_url = input("Provide ending/older post URL (enter 0 for oldest post): ")
+
+    start_id = int(start_url.split('/')[-1])
+    end_id = int(end_url.split('/')[-1])
+
+    if start_id:
+        if end_id:
+            mode = "range"
+            if start_id < end_id:
+                start_id, end_id = end_id, start_id
+            print("Downloading posts between", start_id, "and", end_id, "...")
+        else:
+            mode = "older"
+            print("Downloading posts older than", start_id, "...")
+    else:
+        if end_id:
+            mode = "newer"
+            print("Downloading posts newer than", end_id, "...")
+        else:
+            mode = "all"
+
+if mode == "all":
+    print("Downloading all posts ...")
+
 # Variable to store all posts
 all_posts = []
 
@@ -199,6 +230,17 @@ while True:
 # Filter posts based on the settings in profileconfig.json
 filtered_posts = []
 for post in all_posts:
+    if mode != "all":
+        if mode == "range":
+            if not(start_id >= post['id'] and post['id'] >= end_id):
+                continue
+        if mode == "newer":
+            if not(post['id'] >= end_id):
+                continue
+        if mode == "older":
+            if not(post['id'] <= start_id):
+                continue    
+    
     has_media = post['image'] != "No image available" or post['attachments'] != "No attachments"
 
     if profile_config['both']:
