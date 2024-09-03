@@ -135,9 +135,28 @@ For those who want to download dozens or more posts from a profile at once, we h
 
 ### Download All Posts from a Profile
 
-Enter the link of a Kemono or Coomer profile, and the script will start downloading all posts that match the program configuration for downloading all posts from a profile.
+To download all posts from a profile, follow these steps:
 
-![Profile](img/perfil.png)
+1. **Select the Download Option**  
+   After launching the program, you will be presented with two download options for a profile's posts.
+
+2. **Enter the Profile Link**  
+   Input the link of the profile from which you want to download the posts. You will then see the following options:
+
+   ![Options](img/options.png)
+
+   - **Option 1: Download All Posts**  
+     To download all available posts from the profile, type "1" and press Enter. The download of all posts will begin automatically.
+
+     ![AllPosts](img/allposts.png)
+
+   - **Option 2: Download Specific Posts**  
+     If you prefer to download only specific posts, choose option "2". Here, you need to enter the link of the most recent post and the link of the oldest post you wish to download.
+
+     - **Tip:**  
+       If you enter "0" in the initial post field, the download will start from the most recent post. Similarly, entering "0" in the final post field will download posts up to the oldest available one. You can also use "0" in both fields to download all posts from the profile.
+
+     ![SomePosts](img/someposts.png)
 
 ### Download DMs
 
