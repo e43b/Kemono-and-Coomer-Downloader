@@ -151,10 +151,11 @@ To download all posts from a profile, follow these steps:
      ![AllPosts](img/allposts.png)
 
    - **Option 2: Download Specific Posts**  
-     If you prefer to download only specific posts, choose option "2". Here, you need to enter the link of the most recent post and the link of the oldest post you wish to download.
+     If you want to download only certain specific posts, choose option "2". Here, you need to enter the link of the most recent post and the link of the oldest post you want to download.
 
      - **Tip:**  
-       If you enter "0" in the initial post field, the download will start from the most recent post. Similarly, entering "0" in the final post field will download posts up to the oldest available one. You can also use "0" in both fields to download all posts from the profile.
+       If you enter "0" in the start post field, the download will begin from the most recent post. Similarly, entering "0" in the end post field will download up to the oldest post available on the profile. You can also use "0" in both fields to download all posts from the profile.  
+       **Note:** If you prefer, you can directly enter the post ID, which corresponds to the numbers at the end of the link. For example, in the link "https://kemono.su/patreon/user/17913091/post/107229475," the post ID is "107229475." In the link "https://coomer.su/onlyfans/user/thetinyfeettreatvip/post/855923938," the post ID is "855923938."
 
      ![SomePosts](img/someposts.png)
 
