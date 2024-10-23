@@ -8,28 +8,28 @@ def clear_screen():
 def download_posts():
     clear_screen()
     print("Executing script to download specific posts...")
-    os.system('python code/post.py')
+    os.system('python3 code/post.py')
     input("\nPress Enter to return to the menu...")
 
 # Function to download all posts from a profile
 def download_all_profile_posts():
     clear_screen()
     print("Executing script to download all posts from a profile...")
-    os.system('python code/profile.py')
+    os.system('python3 code/profile.py')
     input("\nPress Enter to return to the menu...")
 
 # Function to download DMs from a profile
 def download_dms():
     clear_screen()
     print("Executing script to download DMs from a profile...")
-    os.system('python code/dm.py')
+    os.system('python3 code/dm.py')
     input("\nPress Enter to return to the menu...")
 
 # Function to customize download settings
 def customize_settings():
     clear_screen()
     print("Executing script to customize download settings...")
-    os.system('python settings.py')
+    os.system('python3 settings.py')
     input("\nPress Enter to return to the menu...")
 
 # Check and install necessary dependencies
