@@ -1,8 +1,8 @@
 # Kemono and Coomer Downloader  [![Views](https://hits.sh/github.com/e43bkmncoomen/hits.svg)](https://github.com/e43b/Kemono-and-Coomer-Downloader/)
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/e43bs)
-
 ###### [![](img/en-flag.svg) English](README.md) | [![](img/br.png) Português](README-ptbr.md)
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/e43bs)
 
 The **Kemono and Coomer Downloader** is a tool that allows you to download posts from the [Kemono](https://kemono.su/) and [Coomer](https://coomer.su/) websites.
 
