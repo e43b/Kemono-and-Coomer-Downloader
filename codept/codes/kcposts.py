@@ -153,7 +153,7 @@ def download_files(file_list, folder_path):
         parsed_url = urlparse(url)
         domain = parsed_url.netloc.split('.')[-2] + '.' + parsed_url.netloc.split('.')[-1]  # Get main domain
         if domain not in ['kemono.su', 'coomer.su']:
-            print(f"⚠️ Skipping URL from unallowed domain: {url}")
+            print(f"⚠️ Ignorando URL de domínio não permitido: {url}")
             continue
 
         # Derive file extension
@@ -180,9 +180,9 @@ def download_files(file_list, folder_path):
             with open(file_path, 'wb') as file:
                 for chunk in response.iter_content(chunk_size=8192):
                     file.write(chunk)
-            print(f"Downloaded: {file_name}")
+            print(f"Baixado: {file_name}")
         except Exception as e:
-            print(f"Failed to download {url}: {e}")
+            print(f"Falha no download {url}: {e}")
 
 
 def save_post_content(post_data, folder_path, config):
@@ -314,7 +314,7 @@ def main():
     # Verificar se links foram passados por linha de comando
     if len(sys.argv) < 2:
         print("Por favor, forneça pelo menos um link como argumento.")
-        print("Exemplo: python script.py https://kemono.su/link1 https://coomer.su/link2")
+        print("Exemplo: python script.py https://kemono.su/link1, https://coomer.su/link2")
         sys.exit(1)
 
     # Processar cada link passado
