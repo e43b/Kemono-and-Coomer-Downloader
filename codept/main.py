@@ -4,6 +4,29 @@ import subprocess
 import re
 import json
 import time
+import importlib
+
+def install_requirements():
+    """Verifica e instala as dependências do requirements.txt."""
+    requirements_file = "requirements.txt"
+
+    if not os.path.exists(requirements_file):
+        print(f"Erro: Arquivo {requirements_file} não encontrado.")
+        return
+
+    with open(requirements_file, 'r', encoding='utf-8') as req_file:
+        for line in req_file:
+            # Lê cada linha, ignora vazias ou comentários
+            package = line.strip()
+            if package and not package.startswith("#"):
+                try:
+                    # Tenta importar o pacote para verificar se já está instalado
+                    package_name = package.split("==")[0]  # Ignora versão específica na importação
+                    importlib.import_module(package_name)
+                except ImportError:
+                    # Se falhar, instala o pacote usando pip
+                    print(f"Instalando o pacote: {package}")
+                    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
 def clear_screen():
     """Limpa a tela do console de forma compatível com diferentes sistemas operacionais"""
@@ -164,11 +187,15 @@ def download_specific_posts():
     print("Escolha o método de entrada:")
     print("1 - Digitar os links diretamente")
     print("2 - Carregar os links de um arquivo TXT")
-    choice = input("\nDigite sua escolha (1/2): ")
+    print("3 - Voltar para o menu principal")
+    choice = input("\nDigite sua escolha (1/2/3): ")
 
     links = []
 
-    if choice == '1':
+    if choice == '3':
+        return
+    
+    elif choice == '1':
         print("Cole os links dos posts (separados por vírgula):")
         links = input("Links: ").split(',')
     elif choice == '2':
@@ -354,4 +381,7 @@ def main_menu():
             input("Opção inválida. Pressione Enter para continuar...")
 
 if __name__ == "__main__":
+    print("Verificando dependências...")
+    install_requirements()
+    print("Dependências verificadas.\n")
     main_menu()
