@@ -57,7 +57,7 @@ def process_post(post, base_folder):
 
 def main():
     if len(sys.argv) < 2:
-        print("Uso: python code.py {caminho_do_json}")
+        print("Uso: python down.py {caminho_do_json}")
         sys.exit(1)
 
     # Pega o caminho do arquivo JSON a partir do argumento da linha de comando
