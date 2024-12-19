@@ -1,7 +1,1 @@
 requests
-re
-json
-datetime
-html5lib
-urllib3
-concurrent-futures
