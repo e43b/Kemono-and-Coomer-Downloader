@@ -28,7 +28,7 @@ def download_file(file_url, save_path):
                 if chunk:
                     f.write(chunk)
     except Exception as e:
-        print(f"Failed to download {file_url}: {e}")
+        print(f"Falha no download {file_url}: {e}")
 
 def process_post(post, base_folder):
     """Process a single post, downloading its files."""
@@ -36,7 +36,7 @@ def process_post(post, base_folder):
     post_folder = os.path.join(base_folder, post_id)
     os.makedirs(post_folder, exist_ok=True)
 
-    print(f"Processing post ID {post_id}")
+    print(f"Processando post ID {post_id}")
 
     # Prepare downloads for this post
     downloads = []
