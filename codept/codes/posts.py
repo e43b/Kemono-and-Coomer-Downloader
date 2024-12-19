@@ -167,7 +167,7 @@ def process_posts(posts, previews, attachments_data, page_number, offset, base_s
 def main():
     # Verificar argumentos de linha de comando
     if len(sys.argv) < 2 or len(sys.argv) > 3:
-        print("Uso: python script.py <profile_url> [fetch_mode]")
+        print("Uso: python posts.py <profile_url> [fetch_mode]")
         print("Modos de busca possíveis:")
         print("- all")
         print("- <número de página>")
