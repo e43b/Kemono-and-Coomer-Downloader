@@ -314,7 +314,7 @@ def main():
     # Verificar se links foram passados por linha de comando
     if len(sys.argv) < 2:
         print("Por favor, forneça pelo menos um link como argumento.")
-        print("Exemplo: python script.py https://kemono.su/link1, https://coomer.su/link2")
+        print("Exemplo: python kcposts.py https://kemono.su/link1, https://coomer.su/link2")
         sys.exit(1)
 
     # Processar cada link passado
