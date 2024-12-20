@@ -1,10 +1,28 @@
-# Kemono and Coomer Downloader  [![Views](https://hits.sh/github.com/e43bkmncoompt/hits.svg)](https://github.com/e43b/Kemono-and-Coomer-Downloader/)
 
-###### [![](img/en-flag.svg) English](README.md) | [![](img/br.png) Português](README-ptbr.md) [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/e43bs)
+# Kemono and Coomer Downloader
+
+[![Views](https://hits.sh/github.com/e43bkmncoomptdx/hits.svg)](https://github.com/e43b/Kemono-and-Coomer-Downloader/)
+
+[![](img/en-flag.svg) English](README.md) | [![](img/br.png) Português](README-ptbr.md)
 
 O **Kemono and Coomer Downloader** é uma ferramenta que permite baixar posts dos sites [Kemono](https://kemono.su/) e [Coomer](https://coomer.su/).
 
-Com essa ferramenta, é possível baixar posts únicos, múltiplos posts sequencialmente, baixar todos os posts de um perfil e baixar todas as DMs de um perfil do Kemono. Também é possível configurar o que deseja salvar nos posts: anexos, vídeos, criar um arquivo `.txt` com informações sobre o post, entre outros. Para mais informações, acesse a [documentação](https://github.com/e43b/Kemono-and-Coomer-Downloader/blob/main/codept/doc.md).
+Com essa ferramenta, é possível baixar posts únicos, múltiplos posts sequencialmente, baixar todos os posts de um perfil do Kemono ou Coomer.
+
+## Apoie o Desenvolvimento da Ferramenta 💖
+
+Esta ferramenta foi criada com dedicação para facilitar sua vida e é mantida de forma independente. Se você acha que ela foi útil e gostaria de contribuir para sua melhoria contínua, considere fazer uma doação.
+
+Toda ajuda é bem-vinda e será usada para cobrir custos de manutenção, melhorias e adição de novos recursos. Seu apoio faz toda a diferença!
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/e43bs)
+
+### Por que doar?
+- **Manutenção contínua**: Ajude a manter a ferramenta sempre atualizada e funcionando.
+- **Novos recursos**: Contribua para a implementação de novas funcionalidades solicitadas pela comunidade.
+- **Agradecimento**: Mostre seu apoio ao projeto e incentive o desenvolvimento de mais ferramentas como esta.
+
+🎉 Obrigado por considerar apoiar este projeto!
 
 ## Star History
 
@@ -14,35 +32,29 @@ Com essa ferramenta, é possível baixar posts únicos, múltiplos posts sequenc
 
 1. **Certifique-se de ter o Python instalado em seu sistema.**
 2. **Clone este repositório:**
-
-    ```sh
-    git clone https://github.com/e43b/Kemono-and-Coomer-Downloader/
-    ```
+```sh
+git clone https://github.com/e43b/Kemono-and-Coomer-Downloader/
+```
 
 3. **Navegue até o diretório do projeto:**
-
-    ```sh
-    cd Kemono-and-Coomer-Downloader
-    ```
+```sh
+cd Kemono-and-Coomer-Downloader
+```
 
 4. **Selecione o idioma desejado:**
-
-    - A pasta `codeen` contém a versão em inglês.
-    - A pasta `codept` contém a versão em português.
+   - A pasta codeen contém a versão em inglês.
+   - A pasta codept contém a versão em português.
 
 5. **Execute o script principal:**
-
-    ```sh
-    python main.py
-    ```
+```sh
+python main.py
+```
 
 6. **Siga as instruções no menu para escolher o que deseja baixar ou personalizar o programa.**
 
 ## Bibliotecas
 
-As bibliotecas necessárias são: `requests` e `beautifulsoup4`. Ao iniciar o script pela primeira vez, se as bibliotecas não estiverem instaladas, será solicitado que você as instale. Basta digitar "s" e elas serão instaladas automaticamente.
-
-![Requirements](img/bibliotecas.png)
+A biblioteca necessária é: requests. Ao iniciar o script pela primeira vez, se a biblioteca não estiver instalada, será instalada automaticamente.
 
 ## Funcionalidades
 
@@ -54,207 +66,262 @@ A página inicial do projeto apresenta as principais opções disponíveis para 
 
 ### Baixar Post
 
-#### Opção 1: Baixar posts manualmente
+#### Opção 1: Download de 1 Post ou Alguns Posts Separados
 
-Para baixar posts específicos, basta inserir os links dos posts, separando-os por vírgula. Esta opção é ideal para baixar alguns poucos posts. Exemplo:
+##### 1.1 Inserir os links diretamente
+
+Para baixar posts específicos, insira os links dos posts separados por vírgula. Esta opção é ideal para baixar poucos posts. Exemplo:
 
 ```sh
-https://kemono.su/patreon/user/133054/post/82477856, https://coomer.su/fansly/user/285310079517863936/post/614339200069672960, https://coomer.su/fansly/user/285310079517863936/post/611301068940255234
+https://coomer.su/onlyfans/user/rosiee616/post/1005002977, https://kemono.su/patreon/user/9919437/post/103396563
 ```
 
 ![Posts](img/posts.png)
 
-#### Opção 2: Baixar posts de um json
+##### 1.2 Carregar links de um arquivo TXT
 
-Para quem deseja baixar dezenas ou mais posts de um perfil de uma vez só, temos uma alternativa robusta:
+Se você possui vários links de posts para baixar, facilite o processo utilizando um arquivo `.txt`. 
 
-1. **Gerar links dos posts de um perfil:**
+###### Passo 1: Criando o Arquivo TXT
 
-   Entre na pasta `codept` e execute o comando:
+1. Abra um editor de texto de sua preferência (como Notepad, VS Code, ou outro).
+2. Liste os links dos posts no seguinte formato:
+   - Separe os links por **vírgulas**.
+   - Exemplo de conteúdo do arquivo:
+```sh
+https://coomer.su/onlyfans/user/rosiee616/post/1005002977, https://kemono.su/patreon/user/9919437/post/103396563
+```
+3. Salve o arquivo com a extensão `.txt`. Por exemplo: `posts.txt`.
 
-   ```sh
-   python links.py <perfil_url> <parâmetro>
-   ```
+###### Passo 2: Localizando o Caminho do Arquivo
 
-   Exemplos:
+Você pode especificar o caminho do arquivo ao script de duas maneiras:
 
-   - Para extrair links de todos os posts do perfil:
+1. **Caminho Absoluto**: Localize o arquivo no seu sistema e copie o caminho completo.
+```sh
+C:\Users\SeuUsuario\Documentos\posts.txt
+```
 
-     ```sh
-     python links.py https://coomer.su/fansly/user/285310079517863936 all
-     ```
+2. **Caminho Relativo**: Se o arquivo estiver na mesma pasta que o script `main.py`, basta informar o nome do arquivo.
+```sh
+posts.txt
+```
 
-   - Para extrair links de posts das páginas 1 até 5:
+###### Passo 3: Executando o Script
 
-     ```sh
-     python links.py https://coomer.su/fansly/user/285310079517863936 "1 to 5"
-     ```
+1. Cole o caminho do arquivo TXT no console.
+2. O script iniciará o download automaticamente e processará todos os links listados no arquivo.
 
-   - Para extrair links de posts das páginas 1, 6 e 9:
+###### Conteúdo do Arquivo TXT
 
-     ```sh
-     python links.py https://coomer.su/fansly/user/285310079517863936 "1, 6, 9"
-     ```
+![Conteúdo do arquivo TXT](img/txtcontent.png)
 
-   - Para extrair links de todas as páginas disponíveis, excluindo as páginas 8 até 10 e a 25:
+###### Script em Execução
 
-     ```sh
-     python links.py https://coomer.su/fansly/user/285310079517863936 "-8 to -10, -25"
-     ```
+![Execução do Script](img/1_2.png)
 
-   ![img](img/linkextract.png)
+##### 1.3 Voltar ao menu principal
 
-2. **Salvar os links em um arquivo JSON:**
+Selecione esta opção para retornar ao menu inicial.
 
-   Após executar o comando, será criada uma pasta chamada `links` contendo um arquivo JSON. Exemplo: `links/coomer_su_285310079517863936_fansly.json`. Este arquivo terá os links extraídos.
+#### Opção 2: Download de Todos os Posts de um Perfil
 
-3. **Baixar posts usando o JSON:**
+⚠️ **Atenção Geral**:
+Neste modo de download, **não será criado o arquivo `files.md`** com informações como título, descrição, embeds, etc.
+Se você precisa dessas informações, utilize a **Opção 1**.
 
-   Execute o script principal:
+##### 2.1: Download de Todos os Posts de um Perfil
 
-   ```sh
-   python main.py
-   ```
+1. Insira o link de um perfil do Coomer ou Kemono.
+2. Pressione **Enter**.
 
-   Selecione a opção 1 para baixar posts.
+**Observações**:
+- Este modo permite baixar todos os posts do perfil inserido.
+- **Limitação**: Não é possível baixar mais de um perfil por vez.
 
-   ![img](img/home.png)
+O sistema irá processar o link, extrair todos os posts e realizar o download.
 
-   Escolha a opção 1 para baixar posts de links adicionados manualmente ou a opção 2 para usar o JSON que foi gerado e contém todos os links que deseja baixar.
+![Execução do Script](img/2_1.png)
 
-   ![img](img/input.png)
+##### 2.2: Download de Posts de uma Página Específica
 
-4. **Iniciar download:**
+1. Insira o link de um perfil do Coomer ou Kemono.
+2. Pressione **Enter**.
+3. Informe o **offset** da página desejada.
 
-   Insira o caminho do JSON gerado: `links/coomer_su_285310079517863936_fansly.json`.
+**Como calcular o offset**:
+- Tanto no Kemono quanto no Coomer, os offsets aumentam de 50 em 50:
+  - Página 1: offset = 0
+  - Página 2: offset = 50
+  - Página 3: offset = 100
+  - ...
+- Para encontrar o offset da página desejada:
+  1. Acesse a página do perfil.
+  2. Clique na página desejada e observe o número no final do link.
+     Exemplo:
+```
+https://kemono.su/patreon/user/9919437?o=750
+```
+Nesse caso, o offset é **750**.
 
-   O download será iniciado e todos os links disponíveis no JSON serão baixados.
+O sistema irá processar a página especificada, extrair os posts e realizar o download.
 
-   ![img](img/downloadlog.png)
-   ![img](img/downloadfile.png)
+![Execução do Script](img/2_2.png)
 
-### Como Baixar Todos os Posts de um Perfil
+##### 2.3: Download de Posts em um Intervalo de Páginas
 
-Para baixar todos os posts de um perfil, siga os passos abaixo:
+1. Insira o link de um perfil do Coomer ou Kemono.
+2. Pressione **Enter**.
+3. Informe o **offset** da página inicial.
+4. Informe o **offset** da página final.
 
-1. **Selecione a Opção de Download**  
-   Após iniciar o programa, você verá duas opções para download dos posts de um perfil.
+**Como calcular os offsets**:
+- O cálculo do offset segue a mesma lógica da **Opção 2.2**.
+  - Exemplo:
+    - Página 1: offset = 0
+    - Página 16: offset = 750
 
-2. **Insira o Link do Perfil**  
-   Digite o link do perfil que deseja baixar os posts e, em seguida, você verá as seguintes opções:
+Todos os posts entre os offsets especificados serão extraídos e baixados.
 
-   ![Options](img/options.png)
+![Execução do Script](img/2_3.png)
 
-   - **Opção 1: Baixar Todos os Posts**  
-     Para baixar todos os posts disponíveis no perfil, digite "1" e pressione Enter. O download de todos os posts começará automaticamente.
+##### 2.4: Download de Posts entre Dois Posts Específicos
 
-     ![AllPosts](img/allposts.png)
+1. Insira o link de um perfil do Coomer ou Kemono.
+2. Pressione **Enter**.
+3. Insira o link ou o ID do **post inicial**.
+   - Exemplo de link:
+```
+https://kemono.su/patreon/user/9919437/post/54725686
+```
+   - Apenas o ID: `54725686`.
+4. Insira o link ou o ID do **post final**.
 
-   - **Opção 2: Baixar Posts Específicos**  
-     Se você deseja baixar apenas alguns posts específicos, escolha a opção "2". Aqui, você deve inserir o link do post mais recente e o link do post mais antigo que deseja baixar.
+**O que acontece**:
+O sistema fará o download de todos os posts entre os dois IDs especificados.
 
-     - **Dica:**  
-       Se você inserir "0" no campo do post inicial, o download começará a partir do post mais recente. Da mesma forma, inserir "0" no campo do post final fará o download até o post mais antigo disponível no perfil. Você também pode usar "0" em ambos os campos para baixar todos os posts do perfil.  
-       **Nota:** Se preferir, você pode inserir diretamente o ID dos posts, que corresponde aos números no final do link. Por exemplo, no link "https://kemono.su/patreon/user/17913091/post/107229475", o ID do post é "107229475". No link "https://coomer.su/onlyfans/user/thetinyfeettreatvip/post/855923938", o ID do post é "855923938".
+![Execução do Script](img/2_4.png)
 
-     ![SomePosts](img/someposts.png)
+##### 2.5: Voltar ao Menu Principal
 
-### Baixar DMs
+Selecione esta opção para retornar à página inicial.
 
-Funciona apenas em perfis do site Kemono, pois o Coomer não possui essa função. Basta colocar o link do perfil, e todas as DMs serão extraídas em `.txt` e salvas na pasta `dm`.
+#### Opção 3: Personalizar as Configurações do Programa
 
-![DM](img/dm.png)
-![DM arquivos](img/dmarchives.png)
+Essa opção permite configurar algumas preferências no programa. As opções disponíveis são as seguintes:
+
+1. **Take empty posts**: `False`
+2. **Download older posts first**: `False`
+3. **For individual posts, create a file with information (title, description, etc.)**: `True`
+4. **Choose the type of file to save the information (Markdown or TXT)**: `md`
+5. **Back to the main menu**
+
+##### Descrição das Opções
+
+###### Take Empty Posts
+- Define se posts vazios (sem arquivos anexos) devem ser incluídos nos downloads massivos de perfis.
+  - **False (Recomendado)**: Posts vazios serão ignorados.
+  - **True**: Será criada uma pasta para os posts vazios. Use essa opção apenas em casos específicos.
+
+###### Download Older Posts First
+- Controla a ordem de download dos posts em perfis:
+  - **False**: Baixa os posts mais recentes primeiro.
+  - **True**: Baixa os posts mais antigos primeiro.
+
+###### Criar Arquivo com Informações (Posts Individuais)
+- Define se será criado um arquivo contendo informações como título, descrição e embeds ao baixar posts individualmente:
+  - **True**: Cria o arquivo informativo.
+  - **False**: Não cria o arquivo.
+
+###### Tipo de Arquivo para Salvar Informações
+- Escolha o formato do arquivo criado nas **Opções Individuais**:
+  - **Markdown (`md`)**: Arquivo no formato Markdown.
+  - **TXT (`txt`)**: Arquivo no formato texto simples.
+  - **Nota**: Ambos os formatos utilizam estrutura Markdown.
+
+###### Como Alterar as Configurações
+Para modificar qualquer uma das opções, basta digitar o número correspondente. O programa alternará automaticamente o valor entre as opções disponíveis (por exemplo, de `True` para `False`).
+
+![Configurações do Programa](img/3.png)
+
+#### Opção 4: Sair do Programa
+
+Essa opção encerra o programa.
 
 ## Organização dos Arquivos
 
-Os posts são salvos em pastas para facilitar a organização. A estrutura das pastas é a seguinte:
+Os posts são salvos em pastas para facilitar a organização. A estrutura de pastas segue o padrão abaixo:
 
-1. **Plataforma:** Uma pasta principal é criada para a plataforma (Kemono ou Coomer).
-2. **Autor:** Dentro da pasta da plataforma, é criada uma pasta para cada autor.
-3. **Posts:** Dentro da pasta do autor, há uma pasta `posts` onde são salvos os posts. Cada post é salvo em uma subpasta identificada pelo ID do post.
-4. **DMs:** Dentro da pasta do autor, há também uma pasta `DMs` onde são salvos os arquivos `.txt` das DMs.
+### Estrutura das Pastas
 
-Exemplo da estrutura de pastas:
+1. **Plataforma**: Uma pasta principal é criada para cada plataforma (Kemono ou Coomer).
+2. **Autor**: Dentro da pasta da plataforma, é criada uma pasta para cada autor no formato **Nome-Serviço-Id**.
+3. **Posts**: Dentro da pasta do autor, há uma subpasta chamada `posts` onde os conteúdos são organizados.
+   Cada post é salvo em uma subpasta identificada pelo **ID do post**.
+
+### Exemplo da Estrutura de Pastas
 
 ```
 Kemono-and-Coomer-Downloader/
 │
-├── kemono/                               # Pasta da plataforma Kemono
-│   ├── autor1/                           # Pasta do autor 1
-│   │   ├── posts/                        # Pasta de posts do autor 1
-│   │   │   ├── postID1/                  # Pasta do post com ID 1
-│   │   │   │   ├── conteudo_do_post      # Conteúdo do post
-│   │   │   │   └── ...                   # Outros arquivos do post
-│   │   │   └── postID2/                  # Pasta do post com ID 2
-│   │   │       ├── conteudo_do_post      # Conteúdo do post
-│   │   │       └── ...                   # Outros arquivos do post
-│   │   └── DMs/                          # Pasta de DMs do autor 1
-│   │       ├── dm1.txt                   # DM 1
-│   │       ├── dm2.txt                   # DM 2
-│   │       └── ...                       # Outras DMs
-│   └── autor2/                           # Pasta do autor 2
-│       ├── posts/                        # Pasta de posts do autor 2
-│       └── DMs/                          # Pasta de DMs do autor 2
+├── kemono/                                 # Pasta da plataforma Kemono
+│   ├── Nome-Serviço-Id/                    # Pasta do autor no formato Nome-Serviço-Id
+│   │   ├── posts/                          # Pasta de posts do autor
+│   │   │   ├── postID1/                    # Pasta do post com ID 1
+│   │   │   │   ├── conteudo_do_post        # Conteúdo do post
+│   │   │   │   ├── files.md                # (Opcional) Arquivo com informações dos arquivos
+│   │   │   │   └── ...                     # Outros arquivos do post
+│   │   │   ├── postID2/                    # Pasta do post com ID 2
+│   │   │   │   ├── conteudo_do_post        # Conteúdo do post
+│   │   │   │   └── files.txt               # (Opcional) Arquivo com informações dos arquivos
+│   │   │   └── ...                         # Outros posts
+│   │   └── ...                             # Outros conteúdos do autor
+│   └── Nome-Serviço-Id/                    # Pasta de outro autor no formato Nome-Serviço-Id
+│       ├── posts/                          # Pasta de posts do autor
+│       └── ...                             # Outros conteúdos
 │
-└── coomer/                               # Pasta da plataforma Coomer
-    ├── autor1/                           # Pasta do autor 1
-    │   ├── posts/                        # Pasta de posts do autor 1
-    │   └── DMs/                          # Pasta de DMs do autor 1 (se aplicável)
-    └── autor2/                           # Pasta do autor 2
-        ├── posts/                        # Pasta de posts do autor 2
-        └── DMs/                          # Pasta de DMs do autor 2 (se aplicável)
+└── coomer/                                 # Pasta da plataforma Coomer
+    ├── Nome-Serviço-Id/                    # Pasta do autor no formato Nome-Serviço-Id
+    │   ├── posts/                          # Pasta de posts do autor
+    │   │   ├── postID1/                    # Pasta do post com ID 1
+    │   │   │   ├── conteudo_do_post        # Conteúdo do post
+    │   │   │   ├── files.txt               # (Opcional) Arquivo com informações dos arquivos
+    │   │   │   └── ...                     # Outros arquivos do post
+    │   │   └── postID2/                    # Pasta do post com ID 2
+    │   │       ├── conteudo_do_post        # Conteúdo do post
+    │   │       └── ...                     # Outros arquivos do post
+    │   └── ...                             # Outros conteúdos do autor
+    └── Nome-Serviço-Id/                    # Pasta de outro autor no formato Nome-Serviço-Id
+        ├── posts/                          # Pasta de posts do autor
+        └── ...                             # Outros conteúdos
 ```
 
-![Arquivos](img/arquivo.png)
+![Organização das Pastas](img/pastas.png)
 
-## Configuração
+### Sobre o Arquivo `files.md` ou `files.txt`
 
-A página de configuração permite que você personalize o programa de acordo com suas necessidades.
+O arquivo `files.md` (ou `files.txt`, dependendo da configuração escolhida) contém as seguintes informações sobre cada post:
+- **Título**: O título do post.
+- **Descrição/Conteúdo**: O conteúdo ou descrição do post.
+- **Embeds**: Informações sobre elementos incorporados (se houver).
+- **Links de Arquivos**: URLs de arquivos presentes nas seções de **Attachments**, **Videos**, e **Images**.
 
-![Settings](img/configure.png)
-
-### Configuração de Posts
-
-No modo de configuração de posts, o usuário pode definir várias opções, incluindo:
-
-- **Baixar Anexos:** Escolha se deseja baixar ou não anexos.
-- **Baixar Vídeos:** Escolha se deseja baixar vídeos quando disponíveis.
-- **Salvar Informações:** Salve informações em um arquivo `.txt`, como título, data de postagem, data de importação e conteúdo.
-- **Salvar Comentários:** Salve comentários do post no arquivo `.txt`. Para salvar os comentários, a opção de salvar informações deve estar ativada.
-
-![Settings](img/postconfig.png)
-
-### Configuração de Perfil
-
-No modo de configuração de perfil, o usuário pode definir o que deseja baixar dos posts, de maneira similar às opções de configuração de posts. O diferencial é que o usuário pode filtrar por posts que tenham ou não tenham imagens, podendo escolher uma ou outra, ou ambas as versões.
-
-![Settings](img/configprofile.png)
-
-Para mais detalhes, consulte a [documentação](https://github.com/e43b/Kemono-and-Coomer-Downloader/blob/main/codept/doc.md).
+![Exemplo de files.md](img/files.png)
 
 ## Contribuições
 
-Este projeto é de código aberto e você é encorajado a contribuir para melhorias e novas funcionalidades. Sinta-se à vontade para enviar sugestões, relatar problemas ou enviar pull requests através do [repositório oficial no GitHub](https://github.com/e43b/Kemono-and-Coomer-Downloader/) ou por meio do nosso [Discord](https://discord.gg/TaPhfXawcE)
+Este projeto é **open-source**, e sua participação é muito bem-vinda! Se você deseja ajudar no aprimoramento da ferramenta, sinta-se à vontade para:
+
+- **Enviar sugestões** para novos recursos ou melhorias.
+- **Relatar problemas** ou bugs encontrados.
+- **Submeter pull requests** com suas próprias contribuições.
+
+Você pode contribuir de diversas maneiras através do nosso [repositório no GitHub](https://github.com/e43b/Kemono-and-Coomer--Downloader/) ou interagir com a comunidade no nosso [Discord](https://discord.gg/GNJbxzD8bK).
 
 ## Autor
 
-Desenvolvido e mantido por [E43b](https://github.com/e43b), o Kemono and Coomer Downloader visa simplificar o processo de download de posts dos sites Kemono e Coomer, proporcionando uma experiência mais acessível e organizada.
+O **Kemono and Coomer Downloader** foi desenvolvido e é mantido por [E43b](https://github.com/e43b). Nosso objetivo é tornar o processo de download de posts nos sites **Kemono** e **Coomer** mais simples, rápido e organizado, proporcionando uma experiência fluída e acessível para os usuários.
 
 ## Suporte
 
-Caso tenha problemas, encontre bugs ou tenha alguma dúvida, acesse o nosso [Discord](https://discord.gg/TaPhfXawcE) para obter ajuda e suporte.
-
-## Links
-
-- **Repositório do Projeto:** [https://github.com/e43b/Kemono-and-Coomer-Downloader/](https://github.com/e43b/Kemono-and-Coomer-Downloader/)
-- **Site Kemono:** [https://kemono.su/](https://kemono.su/)
-- **Site Coomer:** [https://coomer.su/](https://coomer.su/)
-
-### Apoie o Projeto
-
-Se você acha esta ferramenta útil e gostaria de apoiar seu desenvolvimento contínuo, considere fazer uma doação. Sua contribuição ajuda a manter o projeto ativo e a desenvolver novas funcionalidades.
-
-#### Faça uma doação acessando [este link](https://oxapay.com/donate/40874860).
-
-Esperamos que esta ferramenta seja útil para você!
+Se você encontrar problemas, bugs ou tiver dúvidas, nossa comunidade está pronta para ajudar! Entre em contato pelo nosso [Discord](https://discord.gg/GNJbxzD8bK) para obter suporte ou tirar suas dúvidas.
