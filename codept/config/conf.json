@@ -1,0 +1,6 @@
+{
+    "get_empty_posts": false,
+    "process_from_oldest": false,
+    "post_info": "md",
+    "save_info": true
+}
