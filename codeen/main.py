@@ -51,7 +51,7 @@ def display_logo():
 
 Created by E43b
 GitHub: https://github.com/e43b
-Discord: https://discord.gg/CsBMMXBz7t
+Discord: https://discord.gg/GNJbxzD8bK
 Project Repository: https://github.com/e43b/Kemono-and-Coomer-Downloader
 Donate: https://ko-fi.com/e43bs
 """
