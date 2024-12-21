@@ -60,12 +60,35 @@ Faça uma Doação: https://ko-fi.com/e43bs
 def normalize_path(path):
     """
     Normaliza o caminho do arquivo para lidar com caracteres não-ASCII
-    Converte para o caminho absoluto e usa os.path para garantir compatibilidade
     """
-    # Converte para caminho absoluto usando os.path.abspath
-    # Isso lida com diferentes representações de caminho
-    normalized_path = os.path.abspath(path)
-    return normalized_path
+    try:
+        # Se o caminho original existir, retorna ele
+        if os.path.exists(path):
+            return path
+            
+        # Extrai o nome do arquivo e os componentes do caminho
+        filename = os.path.basename(path)
+        path_parts = path.split(os.sep)
+        
+        # Identifica se está procurando em kemono ou coomer
+        base_dir = None
+        if 'kemono' in path_parts:
+            base_dir = 'kemono'
+        elif 'coomer' in path_parts:
+            base_dir = 'coomer'
+            
+        if base_dir:
+            # Procura em todos os subdiretórios do diretório base
+            for root, dirs, files in os.walk(base_dir):
+                if filename in files:
+                    return os.path.join(root, filename)
+        
+        # Se ainda não encontrou, tenta o caminho normalizado
+        return os.path.abspath(os.path.normpath(path))
+
+    except Exception as e:
+        print(f"Erro ao normalizar caminho: {e}")
+        return path
 
 def run_download_script(json_path):
     """Roda o script de download com o JSON gerado e faz tracking detalhado em tempo real"""
