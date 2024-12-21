@@ -258,6 +258,7 @@ def main():
     else:
         file_path = os.path.join(artist_dir, f"posts-{offsets[0]}-{today}.json")
 
+    new_posts= []
     # Processamento principal
     for offset in offsets:
         page_number = (offset // 50) + 1
@@ -265,8 +266,7 @@ def main():
         posts = post_data["results"]
         previews = [item for sublist in post_data.get("result_previews", []) for item in sublist]
         attachments = [item for sublist in post_data.get("result_attachments", []) for item in sublist]
-        
-        # Processar posts com filtro de ID, se aplicável
+
         processed_posts = process_posts(
             posts, 
             previews, 
@@ -277,10 +277,10 @@ def main():
             save_empty_files=SAVE_EMPTY_FILES,
             id_filter=id_filter
         )
-
+        new_posts.extend(processed_posts)
         # Salvar posts incrementais no JSON
         if processed_posts:
-            save_json_incrementally(file_path, processed_posts, offset, offset+50)
+            save_json_incrementally(file_path, new_posts, offset, offset+50)
             
             # Verificar se encontrou os IDs desejados
             if id_filter:
