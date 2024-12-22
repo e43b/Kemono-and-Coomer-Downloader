@@ -164,6 +164,10 @@ def process_posts(posts, previews, attachments_data, page_number, offset, base_s
 
     return processed
 
+def sanitize_filename(value):
+    """Remove caracteres que podem quebrar a criação de pastas."""
+    return value.replace("/", "").replace("\\", "")
+
 def main():
     # Verificar argumentos de linha de comando
     if len(sys.argv) < 2 or len(sys.argv) > 3:
@@ -223,8 +227,13 @@ def main():
     profiles[user_id] = artist_info
     save_json(profiles_file, profiles)
 
+    # Sanitizar os valores
+    safe_name = sanitize_filename(name)
+    safe_service = sanitize_filename(service)
+    safe_user_id = sanitize_filename(user_id)
+
     # Pasta do artista
-    artist_dir = os.path.join(base_dir, f"{name}-{service}-{user_id}")
+    artist_dir = os.path.join(base_dir, f"{safe_name}-{safe_service}-{safe_user_id}")
     os.makedirs(artist_dir, exist_ok=True)
 
     # Processar modo de busca
