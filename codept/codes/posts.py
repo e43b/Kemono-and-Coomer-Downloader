@@ -166,7 +166,7 @@ def process_posts(posts, previews, attachments_data, page_number, offset, base_s
 
 def sanitize_filename(value):
     """Remove caracteres que podem quebrar a criação de pastas."""
-    return value.replace("/", "").replace("\\", "")
+    return value.replace("/", "_").replace("\\", "_")
 
 def main():
     # Verificar argumentos de linha de comando
