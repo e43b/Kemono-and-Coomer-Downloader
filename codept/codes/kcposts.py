@@ -37,12 +37,12 @@ def ensure_directory(path):
 
 def load_profiles(path):
     if os.path.exists(path):
-        with open(path, 'r') as file:
+        with open(path, 'r', encoding='utf-8') as file:
             return json.load(file)
     return {}
 
 def save_profiles(path, profiles):
-    with open(path, 'w') as file:
+    with open(path, 'w', encoding='utf-8') as file:
         json.dump(profiles, file, indent=4)
 
 def extract_data_from_link(link):
@@ -306,6 +306,10 @@ def save_post_content(post_data, folder_path, config):
 
     # Download files to the specified folder
     download_files(unique_files_to_download, folder_path)
+
+def sanitize_filename(value):
+    """Remove caracteres que podem quebrar a criação de pastas."""
+    return value.replace("/", "_").replace("\\", "_")
     
 def main():
     # Carregar configurações
@@ -344,9 +348,12 @@ def main():
             else:
                 profile_data = profiles[user_id]
 
-            # Create user-specific folder
-            user_name = profile_data.get("name", "unknown_user")
-            user_folder = os.path.join(base_path, f"{user_name}-{service}-{user_id}")
+            # Criar pasta específica para o usuário
+            user_name = sanitize_filename(profile_data.get("name", "unknown_user"))
+            safe_service = sanitize_filename(service)
+            safe_user_id = sanitize_filename(user_id)
+
+            user_folder = os.path.join(base_path, f"{user_name}-{safe_service}-{safe_user_id}")
             ensure_directory(user_folder)
 
             # Create posts folder and post-specific folder
