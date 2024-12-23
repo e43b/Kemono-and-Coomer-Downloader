@@ -188,6 +188,7 @@ def download_files(file_list, folder_path):
 def save_post_content(post_data, folder_path, config):
     """
     Save post content and download files based on configuration settings.
+    Now includes support for poll data if present.
     
     :param post_data: Dictionary containing post information
     :param folder_path: Path to save the post files
@@ -219,6 +220,39 @@ def save_post_content(post_data, folder_path, config):
         
         # Formatted content
         file.write(f"{content}\n\n")
+
+        # Process poll if it exists
+        poll = post_data['post'].get('poll')
+        if poll:
+            if file_format == "md":
+                file.write("## Poll Information\n\n")
+                file.write(f"**Poll Title:** {poll.get('title', 'No Title')}\n")
+                if poll.get('description'):
+                    file.write(f"\n**Description:** {poll['description']}\n")
+                file.write(f"\n**Multiple Choices Allowed:** {'Yes' if poll.get('allows_multiple') else 'No'}\n")
+                file.write(f"**Started:** {poll.get('created_at', 'N/A')}\n")
+                file.write(f"**Closes:** {poll.get('closes_at', 'N/A')}\n")
+                file.write(f"**Total Votes:** {poll.get('total_votes', 0)}\n\n")
+                
+                # Poll choices
+                file.write("### Choices and Votes\n\n")
+                for choice in poll.get('choices', []):
+                    file.write(f"- **{choice['text']}:** {choice.get('votes', 0)} votes\n")
+            else:
+                file.write("Poll Information:\n\n")
+                file.write(f"Poll Title: {poll.get('title', 'No Title')}\n")
+                if poll.get('description'):
+                    file.write(f"Description: {poll['description']}\n")
+                file.write(f"Multiple Choices Allowed: {'Yes' if poll.get('allows_multiple') else 'No'}\n")
+                file.write(f"Started: {poll.get('created_at', 'N/A')}\n")
+                file.write(f"Closes: {poll.get('closes_at', 'N/A')}\n")
+                file.write(f"Total Votes: {poll.get('total_votes', 0)}\n\n")
+                
+                file.write("Choices and Votes:\n")
+                for choice in poll.get('choices', []):
+                    file.write(f"- {choice['text']}: {choice.get('votes', 0)} votes\n")
+            
+            file.write("\n")
 
         # Process embed
         embed = post_data['post'].get('embed')
