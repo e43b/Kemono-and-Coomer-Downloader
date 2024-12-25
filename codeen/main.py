@@ -279,15 +279,24 @@ def download_profile_posts():
     
     try:
         json_path = None
-        
+
         if choice == '1':
-            posts_process = subprocess.run(['python', os.path.join('codes', 'posts.py'), profile_link, 'all'], 
-                                           capture_output=True, text=True, check=True)
-            # Look for the exact file path in the output
-            for line in posts_process.stdout.split('\n'):
-                if line.endswith('.json'):
-                    json_path = line.strip()
-                    break
+            posts_process = subprocess.run(
+                ['python', os.path.join('codes', 'posts.py'), profile_link, 'all'],
+                capture_output=True,
+                text=True,
+                encoding='utf-8',  # Certifique-se de que a saída é decodificada corretamente
+                check=True
+            )
+
+            # Verificar se stdout contém dados
+            if posts_process.stdout:
+                for line in posts_process.stdout.split('\n'):
+                    if line.endswith('.json'):
+                        json_path = line.strip()
+                        break
+            else:
+                print("No output from the sub-process.")
         
         elif choice == '2':
             page = input("Enter the page number (0 = first page, 50 = second, etc.): ")
