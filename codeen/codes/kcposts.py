@@ -344,10 +344,64 @@ def save_post_content(post_data, folder_path, config):
 def sanitize_filename(value):
     """Remove caracteres que podem quebrar a criação de pastas."""
     return value.replace("/", "_").replace("\\", "_")
-    
-def main():
+
+def run(user_link):
     # Carregar configurações
     config = load_config()
+
+    try:
+        print(f"\n--- Processing link: {user_link} ---")
+
+        # Extract data from the link
+        domain, service, user_id, post_id = extract_data_from_link(user_link)
+
+        # Setup paths
+        base_path = domain  # Use domain as base path (kemono or coomer)
+        profiles_path = os.path.join(base_path, "profiles.json")
+
+        ensure_directory(base_path)
+
+        # Load existing profiles
+        profiles = load_profiles(profiles_path)
+
+        # Fetch and save profile if not already in profiles.json
+        if user_id not in profiles:
+            profile_data = fetch_profile(domain, service, user_id)
+            profiles[user_id] = profile_data
+            save_profiles(profiles_path, profiles)
+        else:
+            profile_data = profiles[user_id]
+
+        # Criar pasta específica para o usuário
+        user_name = sanitize_filename(profile_data.get("name", "unknown_user"))
+        safe_service = sanitize_filename(service)
+        safe_user_id = sanitize_filename(user_id)
+
+        user_folder = os.path.join(base_path, f"{user_name}-{safe_service}-{safe_user_id}")
+        ensure_directory(user_folder)
+
+        # Create posts folder and post-specific folder
+        posts_folder = os.path.join(user_folder, "posts")
+        ensure_directory(posts_folder)
+
+        post_folder = os.path.join(posts_folder, post_id)
+        ensure_directory(post_folder)
+
+        # Fetch post data
+        post_data = fetch_post(domain, service, user_id, post_id)
+
+        # Salvar conteúdo do post usando as configurações
+        save_post_content(post_data, post_folder, config)
+
+        print(f"\n✅ Link processed successfully: {user_link}")
+
+    except Exception as e:
+        print(f"❌ Error processing link {user_link}: {e}")
+        import traceback
+        traceback.print_exc()
+
+
+def main():
 
     # Verificar se links foram passados por linha de comando
     if len(sys.argv) < 2:
@@ -357,59 +411,8 @@ def main():
 
     # Processar cada link passado
     links = sys.argv[1:]
-    
-    for user_link in links:
-        try:
-            print(f"\n--- Processing link: {user_link} ---")
-            
-            # Extract data from the link
-            domain, service, user_id, post_id = extract_data_from_link(user_link)
 
-            # Setup paths
-            base_path = domain  # Use domain as base path (kemono or coomer)
-            profiles_path = os.path.join(base_path, "profiles.json")
-
-            ensure_directory(base_path)
-
-            # Load existing profiles
-            profiles = load_profiles(profiles_path)
-
-            # Fetch and save profile if not already in profiles.json
-            if user_id not in profiles:
-                profile_data = fetch_profile(domain, service, user_id)
-                profiles[user_id] = profile_data
-                save_profiles(profiles_path, profiles)
-            else:
-                profile_data = profiles[user_id]
-
-            # Criar pasta específica para o usuário
-            user_name = sanitize_filename(profile_data.get("name", "unknown_user"))
-            safe_service = sanitize_filename(service)
-            safe_user_id = sanitize_filename(user_id)
-
-            user_folder = os.path.join(base_path, f"{user_name}-{safe_service}-{safe_user_id}")
-            ensure_directory(user_folder)
-
-            # Create posts folder and post-specific folder
-            posts_folder = os.path.join(user_folder, "posts")
-            ensure_directory(posts_folder)
-
-            post_folder = os.path.join(posts_folder, post_id)
-            ensure_directory(post_folder)
-
-            # Fetch post data
-            post_data = fetch_post(domain, service, user_id, post_id)
-            
-            # Salvar conteúdo do post usando as configurações
-            save_post_content(post_data, post_folder, config)
-
-            print(f"\n✅ Link processed successfully: {user_link}")
-
-        except Exception as e:
-            print(f"❌ Error processing link {user_link}: {e}")
-            import traceback
-            traceback.print_exc()
-            continue  # Continua processando próximos links mesmo se um falhar
+    run(links)
 
 if __name__ == "__main__":
     main()

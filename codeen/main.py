@@ -51,6 +51,7 @@ def display_logo():
 
 Created by E43b
 GitHub: https://github.com/e43b
+GitHub: https://github.com/e43b
 Discord: https://discord.gg/GNJbxzD8bK
 Project Repository: https://github.com/e43b/Kemono-and-Coomer-Downloader
 Donate: https://ko-fi.com/e43bs
@@ -158,30 +159,6 @@ def run_download_script(json_path):
                     import codes.down as down
                     down.run(json_path)
 
-
-                    # # Normalizar caminho do script de download
-                    # download_script = normalize_path(os.path.join('codes', 'down.py'))
-                    #
-                    # # Use subprocess.Popen com caminho normalizado e suporte a Unicode
-                    # download_process = subprocess.Popen(
-                    #     [sys.executable, download_script, json_path, post_id],
-                    #     stdout=None,
-                    #     stderr=None,
-                    #     universal_newlines=True,
-                    #     encoding='utf-8'
-                    # )
-
-                    # # Capturar e imprimir output em tempo real
-                    # while True:
-                    #     output = download_process.stdout.readline()
-                    #     if output == '' and download_process.poll() is not None:
-                    #         break
-                    #     if output:
-                    #         print(output.strip())
-
-                    # Verificar código de retorno
-                    # download_process.wait()
-
                     # Após o download, verificar novamente os arquivos
                     current_files = [f for f in os.listdir(post_folder) if os.path.isfile(os.path.join(post_folder, f))]
                     current_files_count = len(current_files)
@@ -247,19 +224,18 @@ def download_specific_posts():
         try:
             domain = link.split('/')[2]
             if domain == 'kemono.su':
-                script_path = os.path.join('codes', 'kcposts.py')
+                import codes.kcposts as kcposts
+                kcposts.run(link)
             elif domain == 'coomer.su':
-                script_path = os.path.join('codes', 'kcposts.py')
+                import codes.kcposts as kcposts
+                kcposts.run(link)
             else:
                 print(f"Domain not supported: {domain}")
                 continue
+        except Exception as e:
+            print(f"There has been an error downlaoding {link} - {e}")
 
-            # Executa o script específico para o domínio
-            subprocess.run(['python', script_path, link], check=True)
-        except IndexError:
-            print(f"Link format error: {link}")
-        except subprocess.CalledProcessError:
-            print(f"Error downloading the post: {link}")
+
 
     input("\nPress Enter to continue...")
 
@@ -286,65 +262,39 @@ def download_profile_posts():
         json_path = None
 
         if choice == '1':
-            posts_process = subprocess.run(
-                ['python', os.path.join('codes', 'posts.py'), profile_link, 'all'],
-                capture_output=True,
-                text=True,
-                encoding='utf-8',  # Certifique-se de que a saída é decodificada corretamente
-                check=True
-            )
+            import codes.posts as posts
+            json_path = posts.run(profile_link,'all')
 
-            # Verificar se stdout contém dados
-            if posts_process.stdout:
-                for line in posts_process.stdout.split('\n'):
-                    if line.endswith('.json'):
-                        json_path = line.strip()
-                        break
-            else:
-                print("No output from the sub-process.")
-        
         elif choice == '2':
             page = input("Enter the page number (0 = first page, 50 = second, etc.): ")
-            posts_process = subprocess.run(['python', os.path.join('codes', 'posts.py'), profile_link, page], 
-                                           capture_output=True, text=True, check=True)
-            for line in posts_process.stdout.split('\n'):
-                if line.endswith('.json'):
-                    json_path = line.strip()
-                    break
-        
+            import codes.posts as posts
+            json_path = posts.run(profile_link,page)
+
         elif choice == '3':
             start_page = input("Enter the start page (start, 0, 50, 100, etc.): ")
             end_page = input("Enter the final page (or use end, 300, 350, 400): ")
-            posts_process = subprocess.run(['python', os.path.join('codes', 'posts.py'), profile_link, f"{start_page}-{end_page}"], 
-                                           capture_output=True, text=True, check=True)
-            for line in posts_process.stdout.split('\n'):
-                if line.endswith('.json'):
-                    json_path = line.strip()
-                    break
-        
+            import codes.posts as posts
+            json_path = posts.run(profile_link, f"{start_page}-{end_page}")
+
         elif choice == '4':
             first_post = input("Paste the link or ID of the first post: ")
             second_post = input("Paste the link or ID from the second post: ")
             
             first_id = first_post.split('/')[-1] if '/' in first_post else first_post
             second_id = second_post.split('/')[-1] if '/' in second_post else second_post
-            
-            posts_process = subprocess.run(['python', os.path.join('codes', 'posts.py'), profile_link, f"{first_id}-{second_id}"], 
-                                           capture_output=True, text=True, check=True)
-            for line in posts_process.stdout.split('\n'):
-                if line.endswith('.json'):
-                    json_path = line.strip()
-                    break
-        
+
+            import codes.posts as posts
+            json_path = posts.run(profile_link, f"{first_id}-{second_id}")
+
         # Se um JSON foi gerado, roda o script de download
         if json_path:
             run_download_script(json_path)
         else:
             print("The JSON path could not be found.")
     
-    except subprocess.CalledProcessError as e:
+    except Exception as e:
         print(f"Error generating JSON: {e}")
-        print(e.stderr)
+        print(e)
     
     input("\nPress Enter to continue...")
 
