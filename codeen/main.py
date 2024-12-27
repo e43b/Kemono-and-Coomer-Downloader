@@ -154,17 +154,22 @@ def run_download_script(json_path):
                     continue
                 
                 try:
-                    # Normalizar caminho do script de download
-                    download_script = normalize_path(os.path.join('codes', 'down.py'))
-                    
-                    # Use subprocess.Popen com caminho normalizado e suporte a Unicode
-                    download_process = subprocess.Popen(
-                        [sys.executable, download_script, json_path, post_id], 
-                        stdout=None,
-                        stderr=None,
-                        universal_newlines=True,
-                        encoding='utf-8'
-                    )
+
+                    import codes.down as down
+                    down.run(json_path)
+
+
+                    # # Normalizar caminho do script de download
+                    # download_script = normalize_path(os.path.join('codes', 'down.py'))
+                    #
+                    # # Use subprocess.Popen com caminho normalizado e suporte a Unicode
+                    # download_process = subprocess.Popen(
+                    #     [sys.executable, download_script, json_path, post_id],
+                    #     stdout=None,
+                    #     stderr=None,
+                    #     universal_newlines=True,
+                    #     encoding='utf-8'
+                    # )
 
                     # # Capturar e imprimir output em tempo real
                     # while True:
@@ -175,7 +180,7 @@ def run_download_script(json_path):
                     #         print(output.strip())
 
                     # Verificar código de retorno
-                    download_process.wait()
+                    # download_process.wait()
 
                     # Após o download, verificar novamente os arquivos
                     current_files = [f for f in os.listdir(post_folder) if os.path.isfile(os.path.join(post_folder, f))]

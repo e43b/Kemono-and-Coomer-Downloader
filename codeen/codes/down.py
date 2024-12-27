@@ -91,14 +91,7 @@ def process_post(post, base_folder):
     print(f"Post {post_id} downloaded")
 
 
-def main():
-    if len(sys.argv) < 2:
-        print("Usage: python down.py {json_path}")
-        sys.exit(1)
-
-    # Pega o caminho do arquivo JSON a partir do argumento da linha de comando
-    json_file_path = sys.argv[1]
-
+def run(json_file_path: str):
     # Verifica se o arquivo existe
     if not os.path.exists(json_file_path):
         print(f"Error: The file '{json_file_path}' was not found.")
@@ -129,6 +122,16 @@ def main():
     for post_index, post in enumerate(posts, start=1):
         process_post(post, base_folder)
         time.sleep(2)  # Wait 2 seconds between posts
+
+
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: python down.py {json_path}")
+        sys.exit(1)
+
+    # Pega o caminho do arquivo JSON a partir do argumento da linha de comando
+    json_file_path = sys.argv[1]
+    run(json_file_path)
 
 
 if __name__ == "__main__":
