@@ -3,9 +3,29 @@ import json
 import re
 import time
 import requests
+from playhouse.shortcuts import ThreadSafeDatabaseMetadata
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
 import sys
+
+from peewee import SqliteDatabase, Model, CharField
+
+# Create an SQLite database connection
+db = SqliteDatabase('downloaded.db')
+
+# Define a simple model (table)
+class DownloadedPosts(Model):
+    value = CharField(unique=True)  # A unique string field
+
+    class Meta:
+        database = db  # Use the 'example.db' SQLite database
+        model_metadata_class = ThreadSafeDatabaseMetadata
+
+
+# Connect to the database
+db.connect()
+# ensure table creation
+db.create_tables([DownloadedPosts])
 
 
 def load_config(file_path):
@@ -51,6 +71,13 @@ def download_file(file_url, save_path):
                         if chunk:
                             f.write(chunk)
                             pbar.update(len(chunk))
+
+            downloaded_size = os.path.getsize(save_path)
+            if downloaded_size == total_size:
+                print(f"\nDownload {file_url} success. File size is correct: {downloaded_size} bytes.")
+            else:
+                print(f"\nDownload {file_url} incomplete. Expected {total_size} bytes but got {downloaded_size} bytes.")
+                raise Exception("not complete try again")
 
             print(f"\nDownload {file_url} success", flush=True)
             return  # Exit the function if download is successful
@@ -120,7 +147,14 @@ def run(json_file_path: str):
 
     # Process each post sequentially
     for post_index, post in enumerate(posts, start=1):
+        try:
+            DownloadedPosts.get(DownloadedPosts.value == post.get("id"))
+            print("Already Downloaded Skipping")
+            continue
+        except Exception:
+            print("The link was not found in the database. Contime download")
         process_post(post, base_folder)
+        DownloadedPosts.create(value=post.get("id"))
         time.sleep(2)  # Wait 2 seconds between posts
 
 

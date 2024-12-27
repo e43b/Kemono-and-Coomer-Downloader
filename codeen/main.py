@@ -351,7 +351,8 @@ def main_menu():
         print("1 - Download 1 post or a few separate posts")
         print("2 - Download all posts from a profile")
         print("3 - Customize the program settings")
-        print("4 - Exit the program")
+        print("4 - remove database")
+        print("5 - Exit the program")
         
         choice = input("\nEnter your choice (1/2/3/4): ")
         
@@ -362,6 +363,8 @@ def main_menu():
         elif choice == '3':
             customize_settings()
         elif choice == '4':
+            os.remove("downloaded.db")
+        elif choice == '5':
             print("Leaving the program. See you later!")
             break
         else:
