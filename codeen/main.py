@@ -160,19 +160,19 @@ def run_download_script(json_path):
                     # Use subprocess.Popen com caminho normalizado e suporte a Unicode
                     download_process = subprocess.Popen(
                         [sys.executable, download_script, json_path, post_id], 
-                        stdout=subprocess.PIPE, 
-                        stderr=subprocess.STDOUT, 
+                        stdout=None,
+                        stderr=None,
                         universal_newlines=True,
                         encoding='utf-8'
                     )
 
-                    # Capturar e imprimir output em tempo real
-                    while True:
-                        output = download_process.stdout.readline()
-                        if output == '' and download_process.poll() is not None:
-                            break
-                        if output:
-                            print(output.strip())
+                    # # Capturar e imprimir output em tempo real
+                    # while True:
+                    #     output = download_process.stdout.readline()
+                    #     if output == '' and download_process.poll() is not None:
+                    #         break
+                    #     if output:
+                    #         print(output.strip())
 
                     # Verificar código de retorno
                     download_process.wait()
