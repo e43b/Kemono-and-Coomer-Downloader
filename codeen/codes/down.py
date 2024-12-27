@@ -3,8 +3,10 @@ import json
 import re
 import time
 import requests
+from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
 import sys
+
 
 def load_config(file_path):
     """Carregar a configuração de um arquivo JSON."""
@@ -13,22 +15,55 @@ def load_config(file_path):
             return json.load(f)
     return {}  # Retorna um dicionário vazio se o arquivo não existir
 
+
 def sanitize_filename(filename):
     """Sanitize filename by removing invalid characters and replacing spaces with underscores."""
     filename = re.sub(r'[\\/*?\"<>|]', '', filename)
     return filename.replace(' ', '_')
 
+
 def download_file(file_url, save_path):
-    """Download a file from a URL and save it to the specified path."""
-    try:
-        response = requests.get(file_url, stream=True)
-        response.raise_for_status()
-        with open(save_path, 'wb') as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                if chunk:
-                    f.write(chunk)
-    except Exception as e:
-        print(f"Download failed {file_url}: {e}")
+    """Download a file from a URL and save it to the specified path with a progress bar and retry logic."""
+    max_retries = 5
+    retry_delay = 5  # seconds
+    attempt = 0
+
+    while attempt < max_retries:
+        try:
+            print(f"Attempt {attempt + 1} to download {file_url}", flush=True)
+            response = requests.get(file_url, stream=True)
+            response.raise_for_status()
+
+            # Get the total file size from headers
+            total_size = int(response.headers.get('content-length', 0))
+
+            # Set up the tqdm progress bar
+            with open(save_path, 'wb') as f:
+                with tqdm(
+                        total=total_size,
+                        unit='B',
+                        unit_scale=True,
+                        unit_divisor=1024,
+                        desc="Downloading",
+                        leave=False  # Keep the progress bar on the same line
+                ) as pbar:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        if chunk:
+                            f.write(chunk)
+                            pbar.update(len(chunk))
+
+            print(f"\nDownload {file_url} success", flush=True)
+            return  # Exit the function if download is successful
+
+        except Exception as e:
+            attempt += 1
+            print(f"Warning: Attempt {attempt} failed to download {file_url}: {e}")
+            if attempt < max_retries:
+                print(f"Retrying in {retry_delay} seconds...")
+                time.sleep(retry_delay)
+            else:
+                print(f"Download failed after {max_retries} attempts.")
+
 
 def process_post(post, base_folder):
     """Process a single post, downloading its files."""
@@ -54,6 +89,7 @@ def process_post(post, base_folder):
             executor.submit(download_file, file_url, file_save_path)
 
     print(f"Post {post_id} downloaded")
+
 
 def main():
     if len(sys.argv) < 2:
@@ -93,6 +129,7 @@ def main():
     for post_index, post in enumerate(posts, start=1):
         process_post(post, base_folder)
         time.sleep(2)  # Wait 2 seconds between posts
+
 
 if __name__ == "__main__":
     main()
