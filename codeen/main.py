@@ -343,6 +343,96 @@ def download_profile_posts():
     
     input("\nPress Enter to continue...")
 
+def download_profile_posts_advanced():
+    """Option to download profile posts with additional information file"""
+    clear_screen()
+    display_logo()
+    print("Option to download profile posts with additional information file")
+    print("-----------------------")
+    print("1 - Download all posts from a profile")
+    print("2 - Download posts from a specific page")
+    print("3 - Downloading posts from a range of pages")
+    print("4 - Downloading posts between two specific posts")
+    print("5 - Back to the main menu")
+
+    choice = input("\nEnter your choice (1/2/3/4/5): ")
+
+    if choice == '5':
+        return
+
+    profile_link = input("Paste the profile link: ")
+
+    try:
+        json_path = None
+
+        if choice == '1':
+            # Download all posts
+            posts_process = subprocess.run(
+                ['python', os.path.join('codes', 'posts.py'), profile_link, 'all'],
+                capture_output=True, text=True, check=True
+            )
+
+            # Extract JSON path from output
+            json_path = next((line.strip() for line in posts_process.stdout.split('\n') if line.endswith('.json')), None)
+
+        elif choice == '2':
+            page = input("Enter the page number (0 = first page, 50 = second, etc.): ")
+            posts_process = subprocess.run(
+                ['python', os.path.join('codes', 'posts.py'), profile_link, page],
+                capture_output=True, text=True, check=True
+            )
+            json_path = next((line.strip() for line in posts_process.stdout.split('\n') if line.endswith('.json')), None)
+
+        elif choice == '3':
+            start_page = input("Enter the start page (start, 0, 50, 100, etc.): ")
+            end_page = input("Enter the end page (or use end, 300, 350, 400): ")
+            posts_process = subprocess.run(
+                ['python', os.path.join('codes', 'posts.py'), profile_link, f"{start_page}-{end_page}"],
+                capture_output=True, text=True, check=True
+            )
+            json_path = next((line.strip() for line in posts_process.stdout.split('\n') if line.endswith('.json')), None)
+
+        elif choice == '4':
+            first_post = input("Paste the link or ID of the first post: ")
+            second_post = input("Paste the link or ID of the second post: ")
+
+            first_id = first_post.split('/')[-1] if '/' in first_post else first_post
+            second_id = second_post.split('/')[-1] if '/' in second_post else second_post
+
+            posts_process = subprocess.run(
+                ['python', os.path.join('codes', 'posts.py'), profile_link, f"{first_id}-{second_id}"],
+                capture_output=True, text=True, check=True
+            )
+            json_path = next((line.strip() for line in posts_process.stdout.split('\n') if line.endswith('.json')), None)
+
+        if json_path:
+            # Load links from JSON and download each post
+            with open(json_path, 'r', encoding='utf-8') as json_file:
+                data = json.load(json_file)
+                links = [post['link'] for post in data.get('posts', [])]
+
+            for link in links:
+                try:
+                    domain = link.split('/')[2]
+                    script_path = os.path.join('codes', 'kcposts.py') if domain in ('kemono.su', 'coomer.su') else None
+
+                    if script_path:
+                        subprocess.run(['python', script_path, link], check=True)
+                    else:
+                        print(f"Unsupported domain: {domain}")
+                except IndexError:
+                    print(f"Error in link format: {link}")
+                except subprocess.CalledProcessError:
+                    print(f"Error downloading the post: {link}")
+        else:
+            print("Could not find the JSON path.")
+
+    except subprocess.CalledProcessError as e:
+        print(f"Error generating JSON: {e}")
+        print(e.stderr)
+
+    input("\nPress Enter to continue..")
+
 def customize_settings():
     """Opção para personalizar configurações"""
     config_path = os.path.join('config', 'conf.json')
@@ -388,15 +478,16 @@ def customize_settings():
         time.sleep(1)
 
 def main_menu():
-    """Menu principal do aplicativo"""
+    """Main menu of the application"""
     while True:
         clear_screen()
         display_logo()
         print("Choose an option:")
         print("1 - Download 1 post or a few separate posts")
         print("2 - Download all posts from a profile")
-        print("3 - Customize the program settings")
-        print("4 - Exit the program")
+        print("3 - Download all posts from a profile (With the file.md for each post)")
+        print("4 - Customize program settings")
+        print("5 - Exit the program")
         
         choice = input("\nEnter your choice (1/2/3/4): ")
         
@@ -405,9 +496,11 @@ def main_menu():
         elif choice == '2':
             download_profile_posts()
         elif choice == '3':
-            customize_settings()
+            download_profile_posts_advanced()
         elif choice == '4':
-            print("Leaving the program. See you later!")
+            customize_settings()
+        elif choice == '5':
+            print("Exiting the program. See you later!")
             break
         else:
             input("Invalid option. Press Enter to continue...")
