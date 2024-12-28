@@ -343,6 +343,96 @@ def download_profile_posts():
     
     input("\nPressione Enter para continuar...")
 
+def download_profile_posts_advanced():
+    """Opção para baixar posts de um perfil com arquivo com informações adicionais"""
+    clear_screen()
+    display_logo()
+    print("Baixar Posts de um Perfil com arquivo com informações adicionais")
+    print("-----------------------")
+    print("1 - Baixar todos os posts de um perfil")
+    print("2 - Baixar Posts de uma página específica")
+    print("3 - Baixar posts de um intervalo de páginas")
+    print("4 - Baixar posts entre dois posts específicos")
+    print("5 - Voltar para o menu principal")
+
+    choice = input("\nDigite sua escolha (1/2/3/4/5): ")
+
+    if choice == '5':
+        return
+
+    profile_link = input("Cole o link do perfil: ")
+
+    try:
+        json_path = None
+
+        if choice == '1':
+            # Baixar todos os posts
+            posts_process = subprocess.run(
+                ['python', os.path.join('codes', 'posts.py'), profile_link, 'all'],
+                capture_output=True, text=True, check=True
+            )
+
+            # Extrair caminho do JSON da saída
+            json_path = next((line.strip() for line in posts_process.stdout.split('\n') if line.endswith('.json')), None)
+
+        elif choice == '2':
+            page = input("Digite o número da página (0 = primeira página, 50 = segunda, etc.): ")
+            posts_process = subprocess.run(
+                ['python', os.path.join('codes', 'posts.py'), profile_link, page],
+                capture_output=True, text=True, check=True
+            )
+            json_path = next((line.strip() for line in posts_process.stdout.split('\n') if line.endswith('.json')), None)
+
+        elif choice == '3':
+            start_page = input("Digite a página inicial (start, 0, 50, 100, etc.): ")
+            end_page = input("Digite a página final (ou use end, 300, 350, 400): ")
+            posts_process = subprocess.run(
+                ['python', os.path.join('codes', 'posts.py'), profile_link, f"{start_page}-{end_page}"],
+                capture_output=True, text=True, check=True
+            )
+            json_path = next((line.strip() for line in posts_process.stdout.split('\n') if line.endswith('.json')), None)
+
+        elif choice == '4':
+            first_post = input("Cole o link ou ID do primeiro post: ")
+            second_post = input("Cole o link ou ID do segundo post: ")
+
+            first_id = first_post.split('/')[-1] if '/' in first_post else first_post
+            second_id = second_post.split('/')[-1] if '/' in second_post else second_post
+
+            posts_process = subprocess.run(
+                ['python', os.path.join('codes', 'posts.py'), profile_link, f"{first_id}-{second_id}"],
+                capture_output=True, text=True, check=True
+            )
+            json_path = next((line.strip() for line in posts_process.stdout.split('\n') if line.endswith('.json')), None)
+
+        if json_path:
+            # Carregar links do JSON e baixar cada post
+            with open(json_path, 'r', encoding='utf-8') as json_file:
+                data = json.load(json_file)
+                links = [post['link'] for post in data.get('posts', [])]
+
+            for link in links:
+                try:
+                    domain = link.split('/')[2]
+                    script_path = os.path.join('codes', 'kcposts.py') if domain in ('kemono.su', 'coomer.su') else None
+
+                    if script_path:
+                        subprocess.run(['python', script_path, link], check=True)
+                    else:
+                        print(f"Domínio não suportado: {domain}")
+                except IndexError:
+                    print(f"Erro no formato do link: {link}")
+                except subprocess.CalledProcessError:
+                    print(f"Erro ao baixar o post: {link}")
+        else:
+            print("Não foi possível encontrar o caminho do JSON.")
+
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao gerar JSON: {e}")
+        print(e.stderr)
+
+    input("\nPressione Enter para continuar...")
+
 def customize_settings():
     """Opção para personalizar configurações"""
     config_path = os.path.join('config', 'conf.json')
@@ -395,8 +485,9 @@ def main_menu():
         print("Escolha uma opção:")
         print("1 - Baixar 1 post ou alguns posts distintos")
         print("2 - Baixar todos os posts de um perfil")
-        print("3 - Personalizar as configurações do programa")
-        print("4 - Sair do programa")
+        print("3 - Baixar todos os posts de um perfil(Com o file.md para cada post)")
+        print("4 - Personalizar as configurações do programa")
+        print("5 - Sair do programa")
         
         choice = input("\nDigite sua escolha (1/2/3/4): ")
         
@@ -405,13 +496,15 @@ def main_menu():
         elif choice == '2':
             download_profile_posts()
         elif choice == '3':
-            customize_settings()
+            download_profile_posts_advanced()
         elif choice == '4':
+            customize_settings()
+        elif choice == '5':
             print("Saindo do programa. Até logo!")
             break
         else:
             input("Opção inválida. Pressione Enter para continuar...")
-
+            
 if __name__ == "__main__":
     print("Verificando dependências...")
     install_requirements()
