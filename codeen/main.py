@@ -5,6 +5,29 @@ import re
 import json
 import time
 import importlib
+import shutil
+
+def find_executable(executable):
+    """
+    Tries to find the full path to an executable on the system using shutil.which().
+
+    Args:
+        executable: The name of the executable to search for.
+
+    Returns:
+        The full path to the executable if found, otherwise None.
+    """
+    try:
+        return shutil.which(executable)
+    except FileNotFoundError:
+        return None
+
+# Example usage
+python_path = find_executable("python3")
+if python_path:
+    print(f"Python 3 found at: {python_path}")
+else:
+    print("Python 3 not found in PATH.")
 
 def install_requirements():
     """Verifica e instala as dependências do requirements.txt."""
@@ -250,7 +273,7 @@ def download_specific_posts():
                 continue
 
             # Executa o script específico para o domínio
-            subprocess.run(['python', script_path, link], check=True)
+            subprocess.run([python_path, script_path, link], check=True)
         except IndexError:
             print(f"Link format error: {link}")
         except subprocess.CalledProcessError:
@@ -282,13 +305,12 @@ def download_profile_posts():
 
         if choice == '1':
             posts_process = subprocess.run(
-                ['python', os.path.join('codes', 'posts.py'), profile_link, 'all'],
+                [python_path, os.path.join('codes', 'posts.py'), profile_link, 'all'],
                 capture_output=True,
                 text=True,
                 encoding='utf-8',  # Certifique-se de que a saída é decodificada corretamente
-                check=True
-            )
-
+                check=True)
+      
             # Verificar se stdout contém dados
             if posts_process.stdout:
                 for line in posts_process.stdout.split('\n'):
@@ -300,7 +322,7 @@ def download_profile_posts():
         
         elif choice == '2':
             page = input("Enter the page number (0 = first page, 50 = second, etc.): ")
-            posts_process = subprocess.run(['python', os.path.join('codes', 'posts.py'), profile_link, page], 
+            posts_process = subprocess.run([python_path, os.path.join('codes', 'posts.py'), profile_link, page], 
                                            capture_output=True, text=True, encoding='utf-8', check=True)
             for line in posts_process.stdout.split('\n'):
                 if line.endswith('.json'):
@@ -310,7 +332,7 @@ def download_profile_posts():
         elif choice == '3':
             start_page = input("Enter the start page (start, 0, 50, 100, etc.): ")
             end_page = input("Enter the final page (or use end, 300, 350, 400): ")
-            posts_process = subprocess.run(['python', os.path.join('codes', 'posts.py'), profile_link, f"{start_page}-{end_page}"], 
+            posts_process = subprocess.run([python_path, os.path.join('codes', 'posts.py'), profile_link, f"{start_page}-{end_page}"], 
                                            capture_output=True, text=True, encoding='utf-8', check=True)
             for line in posts_process.stdout.split('\n'):
                 if line.endswith('.json'):
@@ -324,7 +346,7 @@ def download_profile_posts():
             first_id = first_post.split('/')[-1] if '/' in first_post else first_post
             second_id = second_post.split('/')[-1] if '/' in second_post else second_post
             
-            posts_process = subprocess.run(['python', os.path.join('codes', 'posts.py'), profile_link, f"{first_id}-{second_id}"], 
+            posts_process = subprocess.run([python_path, os.path.join('codes', 'posts.py'), profile_link, f"{first_id}-{second_id}"], 
                                            capture_output=True, text=True, encoding='utf-8', check=True)
             for line in posts_process.stdout.split('\n'):
                 if line.endswith('.json'):
@@ -368,7 +390,7 @@ def download_profile_posts_advanced():
         if choice == '1':
             # Download all posts
             posts_process = subprocess.run(
-                ['python', os.path.join('codes', 'posts.py'), profile_link, 'all'],
+                [python_path, os.path.join('codes', 'posts.py'), profile_link, 'all'],
                 capture_output=True, text=True, encoding='utf-8', check=True
             )
 
@@ -378,7 +400,7 @@ def download_profile_posts_advanced():
         elif choice == '2':
             page = input("Enter the page number (0 = first page, 50 = second, etc.): ")
             posts_process = subprocess.run(
-                ['python', os.path.join('codes', 'posts.py'), profile_link, page],
+                [python_path, os.path.join('codes', 'posts.py'), profile_link, page],
                 capture_output=True, text=True, encoding='utf-8', check=True
             )
             json_path = next((line.strip() for line in posts_process.stdout.split('\n') if line.endswith('.json')), None)
@@ -387,7 +409,7 @@ def download_profile_posts_advanced():
             start_page = input("Enter the start page (start, 0, 50, 100, etc.): ")
             end_page = input("Enter the end page (or use end, 300, 350, 400): ")
             posts_process = subprocess.run(
-                ['python', os.path.join('codes', 'posts.py'), profile_link, f"{start_page}-{end_page}"],
+                [python_path, os.path.join('codes', 'posts.py'), profile_link, f"{start_page}-{end_page}"],
                 capture_output=True, text=True, encoding='utf-8', check=True
             )
             json_path = next((line.strip() for line in posts_process.stdout.split('\n') if line.endswith('.json')), None)
@@ -400,7 +422,7 @@ def download_profile_posts_advanced():
             second_id = second_post.split('/')[-1] if '/' in second_post else second_post
 
             posts_process = subprocess.run(
-                ['python', os.path.join('codes', 'posts.py'), profile_link, f"{first_id}-{second_id}"],
+                [python_path, os.path.join('codes', 'posts.py'), profile_link, f"{first_id}-{second_id}"],
                 capture_output=True, text=True, encoding='utf-8', check=True
             )
             json_path = next((line.strip() for line in posts_process.stdout.split('\n') if line.endswith('.json')), None)
@@ -417,7 +439,7 @@ def download_profile_posts_advanced():
                     script_path = os.path.join('codes', 'kcposts.py') if domain in ('kemono.su', 'coomer.su') else None
 
                     if script_path:
-                        subprocess.run(['python', script_path, link], check=True)
+                        subprocess.run([python_path, script_path, link], check=True)
                     else:
                         print(f"Unsupported domain: {domain}")
                 except IndexError:
