@@ -361,9 +361,10 @@ def customize_settings():
         print(f"2 - Download older posts first: {config['process_from_oldest']}")
         print(f"3 - For individual posts, create a file with information (title, description, etc.): {config['save_info']}")
         print(f"4 - Choose the type of file to save the information (Markdown or TXT): {config['post_info']}")
-        print("5 - Back to the main menu")
+        print(f"5 - Choose the type of  (Wget or Requests): {config['download_method']}")
+        print("6 - Back to the main menu")
 
-        choice = input("\nChoose an option (1/2/3/4/5): ")
+        choice = input("\nChoose an option (1/2/3/4/5/6): ")
 
         if choice == '1':
             config['get_empty_posts'] = not config['get_empty_posts']
@@ -375,6 +376,9 @@ def customize_settings():
             # Alternar entre "md" e "txt"
             config['post_info'] = 'txt' if config['post_info'] == 'md' else 'md'
         elif choice == '5':
+            # Alternar entre "request" e "wget"
+            config['download_method'] = 'request' if config['download_method'] == 'wget' else 'wget'
+        elif choice == '6':
             # Sair do menu de configurações
             break
         else:

@@ -5,6 +5,7 @@ import time
 import requests
 from concurrent.futures import ThreadPoolExecutor
 import sys
+import subprocess
 
 def load_config(file_path):
     """Carregar a configuração de um arquivo JSON."""
@@ -18,17 +19,36 @@ def sanitize_filename(filename):
     filename = re.sub(r'[\\/*?\"<>|]', '', filename)
     return filename.replace(' ', '_')
 
+
 def download_file(file_url, save_path):
     """Download a file from a URL and save it to the specified path."""
-    try:
-        response = requests.get(file_url, stream=True)
-        response.raise_for_status()
-        with open(save_path, 'wb') as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                if chunk:
-                    f.write(chunk)
-    except Exception as e:
-        print(f"Download failed {file_url}: {e}")
+    config_file_path = os.path.join("config", "conf.json")
+    config = load_config(config_file_path)
+    wget = os.path.abspath(os.path.join(os.path.dirname(__file__), "wget.exe"))
+
+    if config['download_method'] == 'requests':
+        try:
+            response = requests.get(file_url, stream=True)
+            response.raise_for_status()
+            with open(save_path, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+        except Exception as e:
+            print(f"Download failed {file_url}: {e}")
+    
+    elif config['download_method'] == 'wget':
+        try:
+            subprocess.run(
+                [f"{wget}", "-q", "--no-check-certificate", "-O", save_path, file_url],
+                check=True
+            )
+        except subprocess.CalledProcessError:
+            print(f"Download failed {file_url}: Error during wget execution.")
+        except FileNotFoundError:
+            print("Error: wget is not installed on the system.")
+    else:
+        print("Error: Invalid download method specified in the config.")
 
 def process_post(post, base_folder):
     """Process a single post, downloading its files."""
