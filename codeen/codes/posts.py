@@ -4,6 +4,8 @@ import json
 import requests
 from datetime import datetime
 
+sys.stdout.reconfigure(encoding='utf-8')
+
 def save_json(file_path, data):
     """Helper function to save JSON files with UTF-8 encoding and pretty formatting"""
     with open(file_path, "w", encoding="utf-8") as f:
