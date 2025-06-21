@@ -6,6 +6,21 @@ import requests
 from concurrent.futures import ThreadPoolExecutor
 import sys
 
+
+def download_chunk(url, start, end, chunk_index):
+    print(f"Starting download of chunk {chunk_index}...")
+    headers = {'Range': f'bytes={start}-{end}'}
+    response = requests.get(url, headers=headers, stream=True)
+    with open(f'temp_chunk_{chunk_index}', 'wb') as chunk_file:
+        chunk_file.write(response.content)
+
+def merge_chunks(output_file, num_chunks):
+    with open(output_file, 'wb') as final_file:
+        for i in range(num_chunks):
+            with open(f'temp_chunk_{i}', 'rb') as chunk_file:
+                final_file.write(chunk_file.read())
+
+
 def load_config(file_path):
     """Carregar a configuração de um arquivo JSON."""
     if os.path.exists(file_path):
@@ -18,17 +33,40 @@ def sanitize_filename(filename):
     filename = re.sub(r'[\\/*?\"<>|]', '', filename)
     return filename.replace(' ', '_')
 
-def download_file(file_url, save_path):
-    """Download a file from a URL and save it to the specified path."""
-    try:
-        response = requests.get(file_url, stream=True)
-        response.raise_for_status()
-        with open(save_path, 'wb') as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                if chunk:
-                    f.write(chunk)
-    except Exception as e:
-        print(f"Download failed {file_url}: {e}")
+# def download_file(file_url, save_path):
+#     """Download a file from a URL and save it to the specified path."""
+#     try:
+#         response = requests.get(file_url, stream=True)
+#         response.raise_for_status()
+#         with open(save_path, 'wb') as f:
+#             for chunk in response.iter_content(chunk_size=8192):
+#                 if chunk:
+#                     f.write(chunk)
+#     except Exception as e:
+#         print(f"Download failed {file_url}: {e}")
+
+def download_file(url, output_file, num_connections=20):
+    # Check if the file already exists
+    if os.path.exists(output_file):
+        print(f"File '{output_file}' already exists. Skipping download.")
+        return
+    print(f"Downloading {url} to {output_file} using {num_connections} connections...")
+    response = requests.head(url)
+    file_size = int(response.headers.get('Content-Length', 0))
+    chunk_size = file_size // num_connections
+
+    with ThreadPoolExecutor(max_workers=num_connections) as executor:
+        futures = []
+        for i in range(num_connections):
+            start = i * chunk_size
+            end = start + chunk_size - 1 if i < num_connections - 1 else file_size - 1
+            futures.append(executor.submit(download_chunk, url, start, end, i))
+
+        for future in futures:
+            future.result()  # Wait for all threads to complete
+
+    merge_chunks(output_file, num_connections)
+
 
 def process_post(post, base_folder):
     """Process a single post, downloading its files."""
