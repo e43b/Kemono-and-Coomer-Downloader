@@ -23,7 +23,7 @@ def get_base_config(profile_url):
     # Extract domain from the profile URL
     domain = profile_url.split('/')[2]
     
-    if domain not in ['kemono.su', 'coomer.su']:
+    if domain not in ['kemono.su', 'coomer.st']:
         raise ValueError(f"Unsupported domain: {domain}")
     
     BASE_API_URL = f"https://{domain}/api/v1"

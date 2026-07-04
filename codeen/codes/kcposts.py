@@ -47,39 +47,39 @@ def save_profiles(path, profiles):
 
 def extract_data_from_link(link):
     """
-    Extract service, user_id, and post_id from both kemono.su and coomer.su links
+    Extract service, user_id, and post_id from both kemono.su and coomer.st links
     """
-    # Pattern for both kemono.su and coomer.su
-    match = re.match(r"https://(kemono|coomer)\.su/([^/]+)/user/([^/]+)/post/([^/]+)", link)
+    # Pattern for both kemono.su and coomer.st
+    match = re.match(r"https://(kemono|coomer)\.(su|st)/([^/]+)/user/([^/]+)/post/([^/]+)", link)
     if not match:
         raise ValueError("Invalid link format")
     
     # Unpack the match groups
-    domain, service, user_id, post_id = match.groups()
+    domain, tld, service, user_id, post_id = match.groups()
     
-    return domain, service, user_id, post_id
+    return domain, tld, service, user_id, post_id
 
-def get_api_base_url(domain):
+def get_api_base_url(domain, tld="su"):
     """
     Dynamically generate API base URL based on the domain
     """
-    return f"https://{domain}.su/api/v1/"
+    return f"https://{domain}.{tld}/api/v1/"
 
-def fetch_profile(domain, service, user_id):
+def fetch_profile(domain, service, user_id, tld="su"):
     """
     Fetch user profile with dynamic domain support
     """
-    api_base_url = get_api_base_url(domain)
+    api_base_url = get_api_base_url(domain, tld)
     url = f"{api_base_url}{service}/user/{user_id}/profile"
     response = requests.get(url)
     response.raise_for_status()
     return response.json()
 
-def fetch_post(domain, service, user_id, post_id):
+def fetch_post(domain, service, user_id, post_id, tld="su"):
     """
     Fetch post data with dynamic domain support
     """
-    api_base_url = get_api_base_url(domain)
+    api_base_url = get_api_base_url(domain, tld)
     url = f"{api_base_url}{service}/user/{user_id}/post/{post_id}"
     response = requests.get(url)
     response.raise_for_status()
@@ -152,7 +152,7 @@ def download_files(file_list, folder_path):
         # Check if URL is from allowed domains
         parsed_url = urlparse(url)
         domain = parsed_url.netloc.split('.')[-2] + '.' + parsed_url.netloc.split('.')[-1]  # Get main domain
-        if domain not in ['kemono.su', 'coomer.su']:
+        if domain not in ['kemono.su', 'coomer.su', 'coomer.st']:
             print(f"⚠️ Ignoring not allowed domain URL: {url}")
             continue
 
@@ -352,7 +352,7 @@ def main():
     # Verificar se links foram passados por linha de comando
     if len(sys.argv) < 2:
         print("Please provide at least one link as an argument.")
-        print("Example: python kcposts.py https://kemono.su/link1, https://coomer.su/link2")
+        print("Example: python kcposts.py https://kemono.su/link1, https://coomer.st/link2")
         sys.exit(1)
 
     # Processar cada link passado
@@ -363,7 +363,7 @@ def main():
             print(f"\n--- Processing link: {user_link} ---")
             
             # Extract data from the link
-            domain, service, user_id, post_id = extract_data_from_link(user_link)
+            domain, tld, service, user_id, post_id = extract_data_from_link(user_link)
 
             # Setup paths
             base_path = domain  # Use domain as base path (kemono or coomer)
@@ -376,7 +376,7 @@ def main():
 
             # Fetch and save profile if not already in profiles.json
             if user_id not in profiles:
-                profile_data = fetch_profile(domain, service, user_id)
+                profile_data = fetch_profile(domain, service, user_id, tld)
                 profiles[user_id] = profile_data
                 save_profiles(profiles_path, profiles)
             else:
@@ -398,7 +398,7 @@ def main():
             ensure_directory(post_folder)
 
             # Fetch post data
-            post_data = fetch_post(domain, service, user_id, post_id)
+            post_data = fetch_post(domain, service, user_id, post_id, tld)
             
             # Salvar conteúdo do post usando as configurações
             save_post_content(post_data, post_folder, config)
